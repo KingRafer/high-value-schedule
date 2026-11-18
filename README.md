@@ -1,47 +1,54 @@
-# High Value Schedule
+# High Value Dashboard
 
-Website schedule & routine harian untuk **pria high value** — fokus pada produktivitas, kesehatan, mindset, dan personal growth.
+Personal dashboard untuk **pria high value** — kelola aktivitas harian, trading journal, dan cita-cita dalam satu tempat.
 
-## Live Demo
-
-Buka file `index.html` di browser, atau enable **GitHub Pages**:
-
-1. Settings → Pages
-2. Source: Deploy from a branch
-3. Branch: `main` / root
-4. Save
-
-Setelah itu site akan tersedia di:  
-`https://kingrafer.github.io/high-value-schedule/`
+**Repo:** https://github.com/KingRafer/high-value-schedule
 
 ## Fitur
 
-- **Jadwal Harian Ideal** — struktur hari yang dirancang untuk deep work, training, recovery, dan review
-- **3 Template Mode**
-  - **Builder Mode** — maksimal deep work untuk membangun bisnis/skill
-  - **Athlete Mode** — prioritas fisik & recovery
-  - **Balanced Mode** — keseimbangan kerja, kesehatan, dan hubungan
-- **Prinsip High Value Man** — 6 prinsip inti
-- **Live Clock** — status waktu saat ini
-- Dark modern UI, fully responsive
+### 1. Hari Ini (Overview)
+- Ringkasan checklist aktivitas
+- Progress target profit harian
+- Impian yang sedang dikejar
 
-## Struktur File
+### 2. Aktivitas (Custom + Checklist)
+- Tambah / edit / hapus aktivitas sendiri
+- Centang yang sudah selesai
+- Filter: Semua / Belum / Selesai
+- Kategori: Focus, Body, Mind, Rest, Lainnya
+- Bisa import dari template Builder / Athlete / Balanced
 
-```
-├── index.html      # Halaman utama
-├── styles.css      # Dark theme styling
-├── app.js          # Schedule data + interactivity
-└── README.md
-```
+### 3. Trading Journal
+- Catat setiap trade (pair, arah, entry, exit, P/L, catatan)
+- Total P/L, Win Rate, jumlah trade
+- **Target Profit Harian** + progress bar
+- Riwayat lengkap bisa diedit / dihapus
 
-## Cara Pakai Lokal
+### 4. Impian & Cita-cita
+- Tulis visi jangka panjang
+- Progress % + target tahun
+- Kategori: Keuangan, Bisnis, Kesehatan, Hubungan, Skill, Lifestyle
 
-Cukup buka `index.html` di browser. Tidak perlu build tool.
+### 5. Jadwal Referensi
+- Template routine high value (Builder / Athlete / Balanced)
+- Bisa langsung dijadikan daftar aktivitas
 
-## Kontribusi
+## Cara Pakai
 
-Silakan fork, improve, atau sesuaikan sesuai kebutuhanmu.
+1. Clone atau download repo
+2. Buka `index.html` di browser
+3. Atau aktifkan **GitHub Pages**:
+   - Settings → Pages → Deploy from branch `main` → Save
+   - Site akan live di: `https://kingrafer.github.io/high-value-schedule/`
+
+Semua data disimpan di **localStorage** browser (tidak hilang selama tidak clear data).
+
+## Tech
+
+- Pure HTML + CSS + Vanilla JS
+- Tidak perlu build / npm
+- Fully responsive
 
 ---
 
-**Built for men who take ownership of their time.**
+**Built for men who take ownership of their time and goals.**
