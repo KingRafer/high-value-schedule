@@ -1,1 +1,159 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>High Value OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="extra.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">HV<span>OS</span></div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-item active" data-section="dashboard"><span class="nav-icon">◈</span> Dashboard</a>
+      <a href="#schedule" class="nav-item" data-section="schedule"><span class="nav-icon">▣</span> Schedule</a>
+      <a href="#habits" class="nav-item" data-section="habits"><span class="nav-icon">◆</span> Discipline</a>
+      <a href="#tasks" class="nav-item" data-section="tasks"><span class="nav-icon">✓</span> Tasks</a>
+      <a href="#trading" class="nav-item" data-section="trading"><span class="nav-icon">↗</span> Trading</a>
+      <a href="#goals" class="nav-item" data-section="goals"><span class="nav-icon">★</span> Impian</a>
+      <div class="nav-divider"></div>
+      <a href="#physical" class="nav-item" data-section="physical"><span class="nav-icon">💪</span> Physical</a>
+      <a href="#grooming" class="nav-item" data-section="grooming"><span class="nav-icon">✦</span> Grooming</a>
+      <a href="#finance" class="nav-item" data-section="finance"><span class="nav-icon">$</span> Finance</a>
+      <a href="#timer" class="nav-item" data-section="timer"><span class="nav-icon">⏱</span> Focus Timer</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="live-clock" id="sidebar-clock">--:--</div>
+      <div class="live-date" id="sidebar-date">—</div>
+    </div>
+  </aside>
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+      <div class="greeting" id="greeting">Selamat datang</div>
+      <div class="topbar-actions">
+        <button class="btn btn-sm btn-outline" id="btn-quick-task">+ Task</button>
+        <button class="btn btn-sm btn-primary" id="btn-quick-habit">+ Habit</button>
+      </div>
+    </header>
+    <main class="content" id="main-content">
+      <p class="empty-hint" id="boot-msg">Loading HVOS…</p>
+    </main>
+  </div>
+  <div class="modal-overlay" id="modal-overlay" hidden></div>
+  <script>
+  // Boot: inject full HTML sections from modules + fetch previous index structure for core sections
+  (async function boot() {
+    const res = await fetch('https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/index.html');
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const main = doc.querySelector('main.content');
+    const modals = doc.querySelector('#modal-overlay');
+    const ourMain = document.getElementById('main-content');
+    if (main) {
+      ourMain.innerHTML = main.innerHTML;
+      // append new sections
+      ourMain.insertAdjacentHTML('beforeend', document.getElementById('extra-sections').innerHTML);
+    }
+    if (modals) {
+      document.getElementById('modal-overlay').innerHTML = modals.innerHTML +
+        document.getElementById('extra-modals').innerHTML;
+    }
+    document.getElementById('boot-msg')?.remove();
+  })();
+  </script>
+  <template id="extra-sections">
+      <section id="physical" class="section">
+        <div class="page-header"><div><h1>Physical Excellence</h1><p class="subtitle">Workout, body, nutrition, sleep</p></div>
+          <div class="header-btns">
+            <button class="btn btn-outline btn-sm" id="btn-log-nutrition">Nutrition</button>
+            <button class="btn btn-primary btn-sm" id="btn-add-workout">+ Workout</button>
+          </div>
+        </div>
+        <div class="stats-row four">
+          <div class="stat-card"><span class="stat-label">Weight</span><span class="stat-value" id="phys-weight">—</span></div>
+          <div class="stat-card"><span class="stat-label">Calories</span><span class="stat-value" id="phys-cal">0</span></div>
+          <div class="stat-card"><span class="stat-label">Protein</span><span class="stat-value" id="phys-protein">0g</span></div>
+          <div class="stat-card"><span class="stat-label">Water</span><span class="stat-value" id="phys-water">0 ml</span></div>
+        </div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Workouts</h2></div><div id="workout-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Exercises</h2><button class="btn btn-sm btn-outline" id="btn-add-exercise">+</button></div><div id="exercise-library" style="display:flex;flex-wrap:wrap"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Body Weight</h2><button class="btn btn-sm btn-outline" id="btn-log-weight">Log</button></div><div id="bw-history"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Measurements</h2><button class="btn btn-sm btn-outline" id="btn-log-measure">Log</button></div><div id="measure-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Sleep</h2><button class="btn btn-sm btn-outline" id="btn-log-sleep">Log</button></div><div id="sleep-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Recovery</h2><button class="btn btn-sm btn-outline" id="btn-log-recovery">Log</button></div><div id="recovery-list"></div></div>
+          <div class="panel panel-wide"><div class="panel-header"><h2>Transformation</h2><button class="btn btn-sm btn-outline" id="btn-log-progress">+ Note</button></div><div id="progress-notes"></div></div>
+        </div>
+      </section>
+      <section id="grooming" class="section">
+        <div class="page-header"><h1>Grooming & Appearance</h1></div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Skincare</h2><button class="btn btn-sm btn-outline" id="btn-edit-skincare">Edit</button></div><div id="skincare-list" class="routine-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Haircare</h2><button class="btn btn-sm btn-outline" id="btn-edit-haircare">Edit</button></div><div id="haircare-list" class="routine-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Hygiene</h2></div><div id="hygiene-list" class="routine-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Reminders</h2><button class="btn btn-sm btn-outline" id="btn-add-groom-reminder">+</button></div><div id="groom-reminders"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Fragrance</h2><button class="btn btn-sm btn-outline" id="btn-add-fragrance">+</button></div><div id="fragrance-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Wardrobe</h2><button class="btn btn-sm btn-outline" id="btn-add-wardrobe">+</button></div><div id="wardrobe-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Outfits</h2><button class="btn btn-sm btn-outline" id="btn-add-outfit">+</button></div><div id="outfit-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Appearance Goals</h2><button class="btn btn-sm btn-outline" id="btn-add-appear-goal">+</button></div><div id="appear-goals"></div></div>
+        </div>
+      </section>
+      <section id="finance" class="section">
+        <div class="page-header"><div><h1>Financial & Wealth</h1></div>
+          <div class="header-btns"><button class="btn btn-outline btn-sm" id="btn-add-expense">+ Expense</button><button class="btn btn-primary btn-sm" id="btn-add-income">+ Income</button></div></div>
+        <div class="stats-row four">
+          <div class="stat-card"><span class="stat-label">Income</span><span class="stat-value" id="fin-income">Rp 0</span></div>
+          <div class="stat-card"><span class="stat-label">Expense</span><span class="stat-value" id="fin-expense">Rp 0</span></div>
+          <div class="stat-card"><span class="stat-label">Cash Flow</span><span class="stat-value" id="fin-cashflow">Rp 0</span></div>
+          <div class="stat-card"><span class="stat-label">Net Worth</span><span class="stat-value" id="fin-networth">Rp 0</span></div>
+        </div>
+        <div class="panel" style="margin-bottom:1rem"><div class="panel-header"><h2>Emergency Fund</h2><button class="btn btn-sm btn-outline" id="btn-set-emergency">Set</button></div>
+          <div class="target-row"><span>Current</span><strong id="ef-current">Rp 0</strong></div>
+          <div class="target-row"><span>Target</span><strong id="ef-target">Rp 0</strong></div>
+          <div class="progress-bar"><div class="progress-fill" id="ef-bar"></div></div></div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Transactions</h2></div><div id="tx-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Budget</h2><button class="btn btn-sm btn-outline" id="btn-add-budget">+</button></div><div id="budget-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Debts</h2><button class="btn btn-sm btn-outline" id="btn-add-debt">+</button></div><div id="debt-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Assets</h2><button class="btn btn-sm btn-outline" id="btn-add-asset">+</button></div><div id="asset-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Financial Goals</h2><button class="btn btn-sm btn-outline" id="btn-add-fin-goal">+</button></div><div id="fin-goals-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Spending Analytics</h2></div><div id="spend-analytics"></div></div>
+        </div>
+      </section>
+  </template>
+  <template id="extra-modals">
+    <div class="modal" id="modal-workout" hidden>
+      <div class="modal-header"><h3>Log Workout</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-workout">
+        <div class="form-row">
+          <div class="form-group"><label>Nama Sesi</label><input type="text" id="wo-name" /></div>
+          <div class="form-group"><label>Tanggal</label><input type="date" id="wo-date" required /></div>
+        </div>
+        <div id="wo-exercises-area"></div>
+        <button type="button" class="btn btn-sm btn-outline" id="btn-add-wo-ex">+ Exercise</button>
+        <div class="modal-actions"><button type="button" class="btn btn-outline" data-close>Batal</button><button type="submit" class="btn btn-primary">Simpan</button></div>
+      </form>
+    </div>
+    <div class="modal" id="modal-tx" hidden>
+      <div class="modal-header"><h3 id="modal-tx-title">Transaksi</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-tx">
+        <input type="hidden" id="tx-type" value="expense" />
+        <div class="form-row">
+          <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="tx-amount" required /></div>
+          <div class="form-group"><label>Tanggal</label><input type="date" id="tx-date" required /></div>
+        </div>
+        <div class="form-group"><label>Kategori</label><input type="text" id="tx-category" /></div>
+        <div class="form-group"><label>Catatan</label><input type="text" id="tx-note" /></div>
+        <div class="modal-actions"><button type="button" class="btn btn-outline" data-close>Batal</button><button type="submit" class="btn btn-primary">Simpan</button></div>
+      </form>
+    </div>
+  </template>
+  <script src="modules.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
