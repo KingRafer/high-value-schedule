@@ -53,7 +53,7 @@
   </div>
   <div class="modal-overlay" id="modal-overlay" hidden></div>
   <script>
-  (async function boot() {
+  window.HVOS_CONTENT_READY = (async function boot() {
     const res = await fetch('https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/index.html');
     const html = await res.text();
     const parser = new DOMParser();
@@ -276,10 +276,6 @@
       </form>
     </div>
   </template>
-  <script src="modules.js"></script>
-  <script src="modules2.js"></script>
-  <script src="modules3.js"></script>
-  <script src="modules4.js"></script>
-  <script src="app.js"></script>
+  <script src="cloud-bootstrap.js"></script>
 </body>
 </html>
