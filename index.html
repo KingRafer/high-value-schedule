@@ -277,6 +277,38 @@
       </form>
     </div>
   </template>
+  <script>
+  (function () {
+    const input = document.getElementById('global-search');
+    const clear = document.getElementById('global-search-clear');
+    const nav = document.querySelector('.sidebar-nav');
+    if (!input || !nav) return;
+    const items = Array.from(nav.querySelectorAll('.nav-item'));
+    function filter() {
+      const q = input.value.trim().toLocaleLowerCase('id');
+      items.forEach(item => {
+        const match = !q || item.textContent.toLocaleLowerCase('id').includes(q);
+        item.hidden = !match;
+      });
+      clear.style.visibility = input.value ? 'visible' : 'hidden';
+    }
+    input.addEventListener('input', filter);
+    clear.addEventListener('click', () => { input.value = ''; filter(); input.focus(); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { input.value = ''; filter(); input.blur(); }
+      if (e.key === 'Enter') {
+        const first = items.find(item => !item.hidden);
+        if (first) first.click();
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName) && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault(); input.focus();
+      }
+    });
+    filter();
+  })();
+  </script>
   <script src="cloud-bootstrap.js"></script>
 </body>
 </html>
