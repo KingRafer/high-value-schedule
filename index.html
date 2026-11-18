@@ -49,29 +49,374 @@
       </div>
     </header>
     <main class="content" id="main-content">
-      <p class="empty-hint" id="boot-msg">Loading HVOS…</p>
+      <!-- ========== DASHBOARD ========== -->
+      <section id="dashboard" class="section section-active">
+        <div class="dash-hero">
+          <div>
+            <p class="eyebrow" id="dash-date">—</p>
+            <h1 id="dash-greeting">Hari yang produktif dimulai sekarang</h1>
+          </div>
+          <div class="score-ring" id="score-ring">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" class="score-bg"/>
+              <circle cx="50" cy="50" r="42" class="score-fg" id="score-circle"/>
+            </svg>
+            <div class="score-text">
+              <span class="score-value" id="perf-score">0</span>
+              <span class="score-label">Score</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row four">
+          <div class="stat-card">
+            <span class="stat-label">Tasks Hari Ini</span>
+            <span class="stat-value" id="dash-tasks">0/0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Habits</span>
+            <span class="stat-value" id="dash-habits">0/0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Streak Terbaik</span>
+            <span class="stat-value" id="dash-streak">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">P/L Hari Ini</span>
+            <span class="stat-value" id="dash-pnl">Rp 0</span>
+          </div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Prioritas Hari Ini</h2>
+              <button class="btn btn-sm btn-outline" data-goto="tasks">Kelola</button>
+            </div>
+            <div id="dash-priorities" class="mini-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Habit Hari Ini</h2>
+              <button class="btn btn-sm btn-outline" data-goto="habits">Semua</button>
+            </div>
+            <div id="dash-habit-list" class="mini-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Jadwal Hari Ini</h2>
+              <button class="btn btn-sm btn-outline" data-goto="schedule">Buka</button>
+            </div>
+            <div id="dash-schedule" class="mini-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Progress Mingguan</h2>
+            </div>
+            <div id="week-bars" class="week-bars"></div>
+            <p class="hint" id="week-summary">—</p>
+          </div>
+
+          <div class="panel panel-wide">
+            <div class="panel-header">
+              <h2>Quick Actions</h2>
+            </div>
+            <div class="quick-actions">
+              <button class="qa-btn" data-goto="timer">▶ Mulai Focus</button>
+              <button class="qa-btn" data-goto="schedule">▣ Time Block</button>
+              <button class="qa-btn" data-goto="habits">◆ Cek Habits</button>
+              <button class="qa-btn" id="qa-add-task">+ Task Cepat</button>
+              <button class="qa-btn" data-goto="trading">↗ Catat Trade</button>
+              <button class="qa-btn" data-goto="goals">★ Lihat Impian</button>
+            </div>
+          </div>
+
+          <div class="panel panel-wide">
+            <div class="panel-header">
+              <h2>Statistik Bulanan</h2>
+            </div>
+            <div class="month-stats" id="month-stats">
+              <div class="ms-item"><span class="ms-val" id="ms-tasks">0</span><span class="ms-lab">Tasks selesai</span></div>
+              <div class="ms-item"><span class="ms-val" id="ms-habits">0</span><span class="ms-lab">Habit check-ins</span></div>
+              <div class="ms-item"><span class="ms-val" id="ms-pomos">0</span><span class="ms-lab">Pomodoro</span></div>
+              <div class="ms-item"><span class="ms-val" id="ms-discipline">0%</span><span class="ms-lab">Discipline rate</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCHEDULE ========== -->
+      <section id="schedule" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Schedule & Time</h1>
+            <p class="subtitle">Time blocking, routine, dan planner</p>
+          </div>
+          <div class="header-btns">
+            <button class="btn btn-outline btn-sm" id="btn-add-block">+ Time Block</button>
+            <button class="btn btn-primary btn-sm" id="btn-add-event">+ Event</button>
+          </div>
+        </div>
+
+        <div class="view-tabs" id="schedule-tabs">
+          <button class="view-tab active" data-view="day">Hari</button>
+          <button class="view-tab" data-view="week">Minggu</button>
+          <button class="view-tab" data-view="month">Bulan</button>
+          <button class="view-tab" data-view="routines">Routines</button>
+        </div>
+
+        <!-- Day View -->
+        <div id="view-day" class="sched-view">
+          <div class="day-nav">
+            <button class="btn btn-sm btn-outline" id="day-prev">‹</button>
+            <strong id="day-label">Hari Ini</strong>
+            <button class="btn btn-sm btn-outline" id="day-next">›</button>
+            <button class="btn btn-sm btn-outline" id="day-today">Hari Ini</button>
+          </div>
+          <div class="time-blocks" id="time-blocks"></div>
+        </div>
+
+        <!-- Week View -->
+        <div id="view-week" class="sched-view" hidden>
+          <div class="week-grid" id="week-grid"></div>
+        </div>
+
+        <!-- Month View -->
+        <div id="view-month" class="sched-view" hidden>
+          <div class="month-nav">
+            <button class="btn btn-sm btn-outline" id="month-prev">‹</button>
+            <strong id="month-label">—</strong>
+            <button class="btn btn-sm btn-outline" id="month-next">›</button>
+          </div>
+          <div class="calendar" id="calendar"></div>
+        </div>
+
+        <!-- Routines -->
+        <div id="view-routines" class="sched-view" hidden>
+          <div class="routines-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <h2>Morning Routine</h2>
+                <button class="btn btn-sm btn-outline" id="btn-edit-morning">Edit</button>
+              </div>
+              <div id="morning-routine" class="routine-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <h2>Evening Routine</h2>
+                <button class="btn btn-sm btn-outline" id="btn-edit-evening">Edit</button>
+              </div>
+              <div id="evening-routine" class="routine-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><h2>Workout Schedule</h2></div>
+              <div id="workout-days" class="workout-chips"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><h2>Work Blocks (Default)</h2></div>
+              <div id="work-blocks" class="mini-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== HABITS / DISCIPLINE ========== -->
+      <section id="habits" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Discipline & Habits</h1>
+            <p class="subtitle">Streak, consistency, dan accountability harian</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-habit">+ Custom Habit</button>
+        </div>
+
+        <div class="stats-row four">
+          <div class="stat-card">
+            <span class="stat-label">Selesai Hari Ini</span>
+            <span class="stat-value" id="habit-today-count">0/0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Streak Aktif</span>
+            <span class="stat-value" id="habit-active-streaks">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Best Streak</span>
+            <span class="stat-value" id="habit-best-streak">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Discipline Rate</span>
+            <span class="stat-value" id="habit-discipline-rate">0%</span>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:1.25rem">
+          <div class="panel-header">
+            <h2>Tracker Hari Ini</h2>
+            <span class="hint" id="habit-date-label"></span>
+          </div>
+          <div id="habit-tracker" class="habit-tracker"></div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-header"><h2>Morning Checklist</h2></div>
+            <div id="morning-check" class="routine-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h2>Night Checklist</h2></div>
+            <div id="night-check" class="routine-list"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:1.25rem">
+          <div class="panel-header">
+            <h2>Consistency (7 Hari Terakhir)</h2>
+          </div>
+          <div id="consistency-chart" class="consistency-chart"></div>
+        </div>
+
+        <div class="panel" style="margin-top:1.25rem">
+          <div class="panel-header">
+            <h2>Habit Challenges</h2>
+            <button class="btn btn-sm btn-outline" id="btn-add-challenge">+ Challenge</button>
+          </div>
+          <div id="challenges-list" class="challenges-list"></div>
+        </div>
+      </section>
+
+      <!-- ========== TASKS ========== -->
+      <section id="tasks" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Tasks & Priorities</h1>
+            <p class="subtitle">Aktivitas yang bisa kamu setting sendiri</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-task">+ Tambah Task</button>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">Semua</button>
+          <button class="filter-btn" data-filter="pending">Belum</button>
+          <button class="filter-btn" data-filter="done">Selesai</button>
+          <button class="filter-btn" data-filter="priority">Prioritas</button>
+        </div>
+        <div id="task-list" class="task-list"></div>
+        <p class="empty-hint" id="tasks-empty">Belum ada task. Tambahkan yang penting hari ini.</p>
+      </section>
+
+      <!-- ========== TRADING ========== -->
+      <section id="trading" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Trading Journal</h1>
+            <p class="subtitle">History, P/L, dan target profit</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-trade">+ Catat Trade</button>
+        </div>
+        <div class="trading-summary">
+          <div class="stat-card large">
+            <span class="stat-label">Total P/L</span>
+            <span class="stat-value" id="total-pnl">Rp 0</span>
+          </div>
+          <div class="stat-card large">
+            <span class="stat-label">Win Rate</span>
+            <span class="stat-value" id="win-rate">0%</span>
+          </div>
+          <div class="stat-card large">
+            <span class="stat-label">Jumlah Trade</span>
+            <span class="stat-value" id="trade-count">0</span>
+          </div>
+          <div class="stat-card large editable">
+            <span class="stat-label">Target Profit Harian</span>
+            <div class="inline-edit">
+              <input type="number" id="input-daily-target" placeholder="0" />
+              <button class="btn btn-sm btn-primary" id="btn-save-target">Simpan</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h2>Riwayat Trade</h2></div>
+          <div class="table-wrap">
+            <table class="trade-table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th><th>Pair</th><th>Arah</th><th>Entry</th><th>Exit</th><th>P/L</th><th>Catatan</th><th></th>
+                </tr>
+              </thead>
+              <tbody id="trade-tbody"></tbody>
+            </table>
+          </div>
+          <p class="empty-hint" id="trades-empty">Belum ada trade.</p>
+        </div>
+      </section>
+
+      <!-- ========== GOALS ========== -->
+      <section id="goals" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Impian & Cita-cita</h1>
+            <p class="subtitle">Visi jangka panjang yang sedang kamu kejar</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-goal">+ Tambah Impian</button>
+        </div>
+        <div id="goals-grid" class="goals-grid"></div>
+        <p class="empty-hint" id="goals-empty">Belum ada impian. Tulis satu yang paling penting.</p>
+      </section>
+
+      <!-- ========== FOCUS TIMER ========== -->
+      <section id="timer" class="section">
+        <div class="page-header">
+          <div>
+            <h1>Focus Timer</h1>
+            <p class="subtitle">Pomodoro & deep work timer</p>
+          </div>
+        </div>
+        <div class="timer-wrap">
+          <div class="timer-display">
+            <div class="timer-mode" id="timer-mode">Focus</div>
+            <div class="timer-time" id="timer-time">25:00</div>
+            <div class="timer-status" id="timer-status">Siap dimulai</div>
+          </div>
+          <div class="timer-controls">
+            <button class="btn btn-primary btn-lg" id="timer-start">Mulai</button>
+            <button class="btn btn-outline btn-lg" id="timer-pause" hidden>Pause</button>
+            <button class="btn btn-outline btn-lg" id="timer-reset">Reset</button>
+          </div>
+          <div class="timer-presets">
+            <button class="preset-btn active" data-min="25" data-mode="Focus">25 Focus</button>
+            <button class="preset-btn" data-min="5" data-mode="Break">5 Break</button>
+            <button class="preset-btn" data-min="15" data-mode="Break">15 Break</button>
+            <button class="preset-btn" data-min="50" data-mode="Deep Work">50 Deep</button>
+            <button class="preset-btn" data-min="90" data-mode="Deep Work">90 Deep</button>
+          </div>
+          <div class="panel" style="margin-top:1.5rem;max-width:420px;width:100%">
+            <div class="panel-header"><h2>Sesi Hari Ini</h2></div>
+            <div class="stats-row" style="justify-content:center;gap:2rem">
+              <div class="stat-card">
+                <span class="stat-value" id="pomo-count">0</span>
+                <span class="stat-label">Pomodoro</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-value" id="focus-minutes">0</span>
+                <span class="stat-label">Menit Fokus</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
   <div class="modal-overlay" id="modal-overlay" hidden></div>
   <script>
-  window.HVOS_CONTENT_READY = (async function boot() {
-    const res = await fetch('https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/index.html');
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const main = doc.querySelector('main.content');
-    const modals = doc.querySelector('#modal-overlay');
-    const ourMain = document.getElementById('main-content');
-    if (main) {
-      ourMain.innerHTML = main.innerHTML;
-      ourMain.insertAdjacentHTML('beforeend', document.getElementById('extra-sections').innerHTML);
-    }
-    if (modals) {
-      document.getElementById('modal-overlay').innerHTML = modals.innerHTML +
-        document.getElementById('extra-modals').innerHTML;
-    }
-    document.getElementById('boot-msg')?.remove();
-  })();
+  window.HVOS_CONTENT_READY = Promise.resolve().then(() => {
+    const main = document.getElementById('main-content');
+    const sections = document.getElementById('extra-sections');
+    const modals = document.getElementById('extra-modals');
+    if (main && sections) main.insertAdjacentHTML('beforeend', sections.innerHTML);
+    if (modals) document.getElementById('modal-overlay')?.insertAdjacentHTML('beforeend', modals.innerHTML);
+  });
   </script>
   <template id="extra-sections">
       <section id="physical" class="section">
@@ -310,6 +655,5 @@
   })();
   </script>
   <script src="cloud-bootstrap.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
