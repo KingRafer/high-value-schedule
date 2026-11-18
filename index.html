@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>High Value Schedule | Routine untuk Pria High Value</title>
-  <meta name="description" content="Jadwal dan routine harian untuk pria high value. Produktivitas, kesehatan, mindset, dan personal growth." />
+  <title>High Value Dashboard | Schedule, Trading & Goals</title>
+  <meta name="description" content="Dashboard pribadi untuk pria high value: jadwal custom, checklist, trading journal, dan cita-cita." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -12,108 +12,198 @@
 </head>
 <body>
   <header class="header">
-    <div class="container">
-      <div class="logo">HV<span>Schedule</span></div>
+    <div class="container header-inner">
+      <div class="logo">HV<span>Dashboard</span></div>
       <nav class="nav">
-        <a href="#home">Beranda</a>
-        <a href="#schedule">Jadwal</a>
-        <a href="#principles">Prinsip</a>
-        <a href="#templates">Template</a>
+        <a href="#today" class="nav-link active" data-section="today">Hari Ini</a>
+        <a href="#tasks" class="nav-link" data-section="tasks">Aktivitas</a>
+        <a href="#trading" class="nav-link" data-section="trading">Trading</a>
+        <a href="#goals" class="nav-link" data-section="goals">Impian</a>
+        <a href="#schedule" class="nav-link" data-section="schedule">Jadwal</a>
       </nav>
-      <button class="btn btn-primary" id="cta-header">Mulai Sekarang</button>
+      <div class="header-right">
+        <div class="live-time" id="header-time">--:--</div>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section id="home" class="hero">
-      <div class="container hero-content">
-        <div class="hero-text">
-          <p class="eyebrow">Untuk Pria yang Serius dengan Hidupnya</p>
-          <h1>Bangun Hari yang<br><span>High Value</span></h1>
-          <p class="lead">Jadwal & routine yang dirancang untuk pria yang ingin naik level — fokus, disiplin, sehat, dan menghasilkan.</p>
-          <div class="hero-actions">
-            <a href="#schedule" class="btn btn-primary">Lihat Jadwal Harian</a>
-            <a href="#templates" class="btn btn-outline">Template Gratis</a>
+  <main class="main">
+    <!-- TODAY OVERVIEW -->
+    <section id="today" class="section section-active">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <p class="eyebrow" id="today-date">—</p>
+            <h1>Hari Ini</h1>
+          </div>
+          <div class="stats-row" id="today-stats">
+            <div class="stat-card">
+              <span class="stat-value" id="stat-tasks">0/0</span>
+              <span class="stat-label">Aktivitas</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="stat-profit">Rp 0</span>
+              <span class="stat-label">P/L Hari Ini</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="stat-goals">0</span>
+              <span class="stat-label">Impian Aktif</span>
+            </div>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="time-card">
-            <div class="time-label">Sekarang</div>
-            <div class="time-display" id="current-time">--:--</div>
-            <div class="time-status" id="current-block">Siapkan hari terbaikmu</div>
+
+        <div class="today-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Checklist Hari Ini</h2>
+              <button class="btn btn-sm btn-outline" id="btn-go-tasks">Kelola</button>
+            </div>
+            <div id="today-tasks" class="task-list compact"></div>
+            <p class="empty-hint" id="today-tasks-empty">Belum ada aktivitas. Tambah di tab Aktivitas.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Target Profit</h2>
+            </div>
+            <div class="target-box">
+              <div class="target-row">
+                <span>Target Hari Ini</span>
+                <strong id="target-daily">Rp 0</strong>
+              </div>
+              <div class="target-row">
+                <span>Realisasi</span>
+                <strong id="target-realized">Rp 0</strong>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="target-progress"></div>
+              </div>
+              <p class="target-status" id="target-status">Belum ada data trading hari ini</p>
+            </div>
+          </div>
+
+          <div class="panel panel-wide">
+            <div class="panel-header">
+              <h2>Impian yang Sedang Dikejar</h2>
+              <button class="btn btn-sm btn-outline" id="btn-go-goals">Lihat Semua</button>
+            </div>
+            <div id="today-goals" class="goals-preview"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Schedule -->
-    <section id="schedule" class="section schedule">
+    <!-- CUSTOM TASKS / AKTIVITAS -->
+    <section id="tasks" class="section">
       <div class="container">
-        <div class="section-header">
-          <h2>Jadwal Harian Ideal</h2>
-          <p>Struktur hari yang dipakai oleh pria high value. Sesuaikan dengan ritme hidupmu.</p>
+        <div class="page-header">
+          <div>
+            <h1>Aktivitas</h1>
+            <p class="subtitle">Buat daftar kegiatanmu sendiri. Centang yang sudah selesai.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-task">+ Tambah Aktivitas</button>
         </div>
 
-        <div class="schedule-grid" id="schedule-grid">
-          <!-- Generated by JS -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">Semua</button>
+          <button class="filter-btn" data-filter="pending">Belum</button>
+          <button class="filter-btn" data-filter="done">Selesai</button>
+        </div>
+
+        <div id="task-list" class="task-list"></div>
+        <p class="empty-hint" id="tasks-empty">Belum ada aktivitas. Klik "Tambah Aktivitas" untuk mulai.</p>
+      </div>
+    </section>
+
+    <!-- TRADING JOURNAL -->
+    <section id="trading" class="section">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <h1>Trading Journal</h1>
+            <p class="subtitle">Catat setiap trade, pantau P/L, dan set target profit.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-trade">+ Catat Trade</button>
+        </div>
+
+        <div class="trading-summary">
+          <div class="stat-card large">
+            <span class="stat-label">Total P/L</span>
+            <span class="stat-value" id="total-pnl">Rp 0</span>
+          </div>
+          <div class="stat-card large">
+            <span class="stat-label">Win Rate</span>
+            <span class="stat-value" id="win-rate">0%</span>
+          </div>
+          <div class="stat-card large">
+            <span class="stat-label">Jumlah Trade</span>
+            <span class="stat-value" id="trade-count">0</span>
+          </div>
+          <div class="stat-card large editable">
+            <span class="stat-label">Target Profit Harian</span>
+            <div class="inline-edit">
+              <input type="number" id="input-daily-target" placeholder="0" />
+              <button class="btn btn-sm btn-primary" id="btn-save-target">Simpan</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Riwayat Trade</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="trade-table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Pair / Instrument</th>
+                  <th>Arah</th>
+                  <th>Entry</th>
+                  <th>Exit</th>
+                  <th>P/L (Rp)</th>
+                  <th>Catatan</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="trade-tbody"></tbody>
+            </table>
+          </div>
+          <p class="empty-hint" id="trades-empty">Belum ada trade tercatat.</p>
         </div>
       </div>
     </section>
 
-    <!-- Principles -->
-    <section id="principles" class="section principles">
+    <!-- GOALS / IMPIAN -->
+    <section id="goals" class="section">
       <div class="container">
-        <div class="section-header">
-          <h2>Prinsip High Value Man</h2>
-          <p>Bukan hanya jadwal. Ini cara berpikir dan bertindak.</p>
+        <div class="page-header">
+          <div>
+            <h1>Impian & Cita-cita</h1>
+            <p class="subtitle">Tuliskan apa yang ingin kamu capai. High value man punya visi yang jelas.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-goal">+ Tambah Impian</button>
         </div>
-        <div class="principles-grid">
-          <article class="principle-card">
-            <div class="principle-num">01</div>
-            <h3>Win the Morning</h3>
-            <p>Pria high value tidak mulai hari dengan scroll. Bangun, gerak, fokus dulu. Momentum pagi menentukan seluruh hari.</p>
-          </article>
-          <article class="principle-card">
-            <div class="principle-num">02</div>
-            <h3>Deep Work Blocks</h3>
-            <p>Kerja dalam blok 90–120 menit tanpa distraksi. Satu tugas, satu fokus. Kualitas > kuantitas.</p>
-          </article>
-          <article class="principle-card">
-            <div class="principle-num">03</div>
-            <h3>Body is the Foundation</h3>
-            <p>Training, nutrisi, sleep. Tubuh yang kuat menopang mind yang tajam dan keputusan yang bagus.</p>
-          </article>
-          <article class="principle-card">
-            <div class="principle-num">04</div>
-            <h3>Protect Your Energy</h3>
-            <p>Katakan tidak pada yang tidak penting. Jaga lingkungan, pergaulan, dan input informasi.</p>
-          </article>
-          <article class="principle-card">
-            <div class="principle-num">05</div>
-            <h3>Review & Iterate</h3>
-            <p>Setiap malam review: apa yang berhasil, apa yang gagal. High value man terus memperbaiki sistem.</p>
-          </article>
-          <article class="principle-card">
-            <div class="principle-num">06</div>
-            <h3>Long-term Compound</h3>
-            <p>Disiplin kecil setiap hari mengalahkan motivasi sesaat. Konsistensi adalah senjata rahasia.</p>
-          </article>
-        </div>
+
+        <div id="goals-grid" class="goals-grid"></div>
+        <p class="empty-hint" id="goals-empty">Belum ada impian. Mulai tulis satu yang paling penting.</p>
       </div>
     </section>
 
-    <!-- Templates -->
-    <section id="templates" class="section templates">
+    <!-- SCHEDULE TEMPLATES -->
+    <section id="schedule" class="section">
       <div class="container">
-        <div class="section-header">
-          <h2>Template Routine</h2>
-          <p>Pilih yang paling cocok dengan tujuanmu saat ini.</p>
+        <div class="page-header">
+          <div>
+            <h1>Jadwal Referensi</h1>
+            <p class="subtitle">Template routine high value. Bisa dijadikan inspirasi untuk aktivitas harianmu.</p>
+          </div>
         </div>
+
         <div class="templates-grid">
           <div class="template-card" data-template="builder">
             <h3>Builder Mode</h3>
-            <p>Fokus membangun bisnis / skill. Deep work maksimal, meeting minimal.</p>
+            <p>Fokus membangun bisnis / skill. Deep work maksimal.</p>
             <ul>
               <li>05:30 – Bangun & Movement</li>
               <li>06:30 – Deep Work 1</li>
@@ -122,24 +212,24 @@
               <li>14:00 – Deep Work 3</li>
               <li>18:00 – Review & Plan</li>
             </ul>
-            <button class="btn btn-sm btn-outline apply-template">Terapkan</button>
+            <button class="btn btn-sm btn-outline apply-template">Pakai sebagai Template Aktivitas</button>
           </div>
           <div class="template-card" data-template="athlete">
             <h3>Athlete Mode</h3>
-            <p>Prioritas fisik tinggi. Recovery dan performa tubuh diutamakan.</p>
+            <p>Prioritas fisik tinggi. Recovery dan performa tubuh.</p>
             <ul>
               <li>05:00 – Bangun & Mobility</li>
               <li>06:00 – Strength Training</li>
               <li>08:00 – Deep Work</li>
-              <li>12:00 – Recovery / Nap</li>
+              <li>12:00 – Recovery</li>
               <li>15:00 – Skill / Cardio</li>
               <li>20:00 – Sleep Prep</li>
             </ul>
-            <button class="btn btn-sm btn-outline apply-template">Terapkan</button>
+            <button class="btn btn-sm btn-outline apply-template">Pakai sebagai Template Aktivitas</button>
           </div>
           <div class="template-card" data-template="balanced">
             <h3>Balanced Mode</h3>
-            <p>Keseimbangan kerja, kesehatan, dan hubungan. Cocok untuk jangka panjang.</p>
+            <p>Keseimbangan kerja, kesehatan, dan hubungan.</p>
             <ul>
               <li>06:00 – Bangun & Journal</li>
               <li>07:00 – Training</li>
@@ -148,28 +238,147 @@
               <li>17:00 – Family / Social</li>
               <li>21:00 – Wind Down</li>
             </ul>
-            <button class="btn btn-sm btn-outline apply-template">Terapkan</button>
+            <button class="btn btn-sm btn-outline apply-template">Pakai sebagai Template Aktivitas</button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- CTA -->
-    <section class="cta">
-      <div class="container">
-        <h2>Siap naik level?</h2>
-        <p>Mulai hari ini. Tidak perlu sempurna, cukup konsisten.</p>
-        <a href="#schedule" class="btn btn-primary btn-lg">Mulai dengan Jadwal</a>
+        <div class="schedule-grid" id="schedule-grid" style="margin-top: 2.5rem;"></div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>High Value Schedule — Built for men who take ownership of their time.</p>
-      <p class="small">Open source · <a href="https://github.com/KingRafer/high-value-schedule" target="_blank" rel="noopener">GitHub</a></p>
+  <!-- MODALS -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <!-- Task Modal -->
+    <div class="modal" id="modal-task" hidden>
+      <div class="modal-header">
+        <h3 id="modal-task-title">Tambah Aktivitas</h3>
+        <button class="modal-close" data-close>&times;</button>
+      </div>
+      <form id="form-task">
+        <input type="hidden" id="task-id" />
+        <div class="form-group">
+          <label>Judul Aktivitas</label>
+          <input type="text" id="task-title" required placeholder="Contoh: Deep work project X" />
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="task-category">
+            <option value="focus">Focus / Work</option>
+            <option value="body">Body / Training</option>
+            <option value="mind">Mind / Journal</option>
+            <option value="rest">Rest / Social</option>
+            <option value="other">Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Catatan (opsional)</label>
+          <textarea id="task-notes" rows="2" placeholder="Detail singkat..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
     </div>
-  </footer>
+
+    <!-- Trade Modal -->
+    <div class="modal" id="modal-trade" hidden>
+      <div class="modal-header">
+        <h3 id="modal-trade-title">Catat Trade</h3>
+        <button class="modal-close" data-close>&times;</button>
+      </div>
+      <form id="form-trade">
+        <input type="hidden" id="trade-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tanggal</label>
+            <input type="date" id="trade-date" required />
+          </div>
+          <div class="form-group">
+            <label>Pair / Instrument</label>
+            <input type="text" id="trade-pair" required placeholder="EURUSD, XAUUSD, BTC..." />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Arah</label>
+            <select id="trade-side">
+              <option value="long">Long / Buy</option>
+              <option value="short">Short / Sell</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>P/L (Rp)</label>
+            <input type="number" id="trade-pnl" required placeholder="Contoh: 150000 atau -50000" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Entry (opsional)</label>
+            <input type="text" id="trade-entry" placeholder="Harga entry" />
+          </div>
+          <div class="form-group">
+            <label>Exit (opsional)</label>
+            <input type="text" id="trade-exit" placeholder="Harga exit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Catatan</label>
+          <textarea id="trade-notes" rows="2" placeholder="Alasan entry, pelajaran, dll"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Goal Modal -->
+    <div class="modal" id="modal-goal" hidden>
+      <div class="modal-header">
+        <h3 id="modal-goal-title">Tambah Impian</h3>
+        <button class="modal-close" data-close>&times;</button>
+      </div>
+      <form id="form-goal">
+        <input type="hidden" id="goal-id" />
+        <div class="form-group">
+          <label>Judul Impian</label>
+          <input type="text" id="goal-title" required placeholder="Contoh: Capai financial freedom" />
+        </div>
+        <div class="form-group">
+          <label>Deskripsi</label>
+          <textarea id="goal-desc" rows="3" placeholder="Kenapa ini penting? Seperti apa bentuknya?"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Target Tahun</label>
+            <input type="number" id="goal-year" min="2024" max="2050" placeholder="2027" />
+          </div>
+          <div class="form-group">
+            <label>Progress (%)</label>
+            <input type="number" id="goal-progress" min="0" max="100" value="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="goal-category">
+            <option value="finance">Keuangan</option>
+            <option value="business">Bisnis / Karir</option>
+            <option value="health">Kesehatan / Fisik</option>
+            <option value="relationship">Hubungan</option>
+            <option value="skill">Skill / Pengetahuan</option>
+            <option value="lifestyle">Gaya Hidup</option>
+            <option value="other">Lainnya</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
