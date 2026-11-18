@@ -594,7 +594,7 @@
 
     // This month
     const now = new Date();
-    const ym = now.toISOString().slice(0, 7);
+    const ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
     const monthTx = transactions.filter(t => (t.date || '').startsWith(ym));
     const monthIn = monthTx.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
     const monthOut = monthTx.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
