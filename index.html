@@ -23,6 +23,10 @@
       <a href="#physical" class="nav-item" data-section="physical"><span class="nav-icon">💪</span> Physical</a>
       <a href="#grooming" class="nav-item" data-section="grooming"><span class="nav-icon">✦</span> Grooming</a>
       <a href="#finance" class="nav-item" data-section="finance"><span class="nav-icon">$</span> Finance</a>
+      <div class="nav-divider"></div>
+      <a href="#career" class="nav-item" data-section="career"><span class="nav-icon">💼</span> Career</a>
+      <a href="#intellect" class="nav-item" data-section="intellect"><span class="nav-icon">📖</span> Intellectual</a>
+      <a href="#mental" class="nav-item" data-section="mental"><span class="nav-icon">🧠</span> Mental</a>
       <a href="#timer" class="nav-item" data-section="timer"><span class="nav-icon">⏱</span> Focus Timer</a>
     </nav>
     <div class="sidebar-footer">
@@ -45,7 +49,6 @@
   </div>
   <div class="modal-overlay" id="modal-overlay" hidden></div>
   <script>
-  // Boot: inject full HTML sections from modules + fetch previous index structure for core sections
   (async function boot() {
     const res = await fetch('https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/index.html');
     const html = await res.text();
@@ -56,7 +59,6 @@
     const ourMain = document.getElementById('main-content');
     if (main) {
       ourMain.innerHTML = main.innerHTML;
-      // append new sections
       ourMain.insertAdjacentHTML('beforeend', document.getElementById('extra-sections').innerHTML);
     }
     if (modals) {
@@ -125,6 +127,60 @@
           <div class="panel"><div class="panel-header"><h2>Spending Analytics</h2></div><div id="spend-analytics"></div></div>
         </div>
       </section>
+      <section id="career" class="section">
+        <div class="page-header"><div><h1>Career & Business</h1><p class="subtitle">Planning, projects, skills, network, revenue</p></div></div>
+        <div class="stats-row four">
+          <div class="stat-card"><span class="stat-label">Revenue Bulan Ini</span><span class="stat-value" id="career-revenue">Rp 0</span></div>
+          <div class="stat-card"><span class="stat-label">Active Projects</span><span class="stat-value" id="career-projects">0</span></div>
+          <div class="stat-card"><span class="stat-label">Skills</span><span class="stat-value" id="career-skills">0</span></div>
+          <div class="stat-card"><span class="stat-label">Network</span><span class="stat-value" id="career-network">0</span></div>
+        </div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Professional Goals</h2><button class="btn btn-sm btn-outline" id="btn-add-career-goal">+</button></div><div id="career-goals-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Projects</h2><button class="btn btn-sm btn-outline" id="btn-add-project">+</button></div><div id="project-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Daily Work Priorities</h2><button class="btn btn-sm btn-outline" id="btn-add-work-prio">+</button></div><div id="work-priority-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Skill Development</h2><button class="btn btn-sm btn-outline" id="btn-add-skill">+</button></div><div id="skill-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Networking</h2><button class="btn btn-sm btn-outline" id="btn-add-network">+</button></div><div id="network-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Meetings</h2><button class="btn btn-sm btn-outline" id="btn-add-meeting">+</button></div><div id="meeting-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Business Ideas</h2><button class="btn btn-sm btn-outline" id="btn-add-idea">+</button></div><div id="idea-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Revenue Tracking</h2><button class="btn btn-sm btn-outline" id="btn-add-revenue">+</button></div><div id="revenue-list"></div></div>
+          <div class="panel panel-wide"><div class="panel-header"><h2>Career Milestones</h2><button class="btn btn-sm btn-outline" id="btn-add-milestone">+</button></div><div id="milestone-list"></div></div>
+        </div>
+      </section>
+      <section id="intellect" class="section">
+        <div class="page-header"><div><h1>Intellectual Development</h1><p class="subtitle">Reading, courses, knowledge, thinking</p></div></div>
+        <div class="stats-row four">
+          <div class="stat-card"><span class="stat-label">Sedang Dibaca</span><span class="stat-value" id="intel-reading">0</span></div>
+          <div class="stat-card"><span class="stat-label">Selesai</span><span class="stat-value" id="intel-finished">0</span></div>
+          <div class="stat-card"><span class="stat-label">Pages Read</span><span class="stat-value" id="intel-pages">0</span></div>
+          <div class="stat-card"><span class="stat-label">Active Courses</span><span class="stat-value" id="intel-courses">0</span></div>
+        </div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Reading Tracker / Library</h2><button class="btn btn-sm btn-outline" id="btn-add-book">+</button></div><div id="book-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Book Notes</h2><button class="btn btn-sm btn-outline" id="btn-add-book-note">+</button></div><div id="book-notes-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Courses</h2><button class="btn btn-sm btn-outline" id="btn-add-course">+</button></div><div id="course-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Daily Learning Goals</h2><button class="btn btn-sm btn-outline" id="btn-add-learn-goal">+</button></div><div id="learn-goal-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Knowledge Base</h2><button class="btn btn-sm btn-outline" id="btn-add-knowledge">+</button></div><div id="knowledge-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Critical Thinking Journal</h2><button class="btn btn-sm btn-outline" id="btn-add-think">+</button></div><div id="think-journal-list"></div></div>
+        </div>
+      </section>
+      <section id="mental" class="section">
+        <div class="page-header"><div><h1>Mental Strength</h1><p class="subtitle">Journaling, gratitude, meditation, wellness</p></div></div>
+        <div class="stats-row four">
+          <div class="stat-card"><span class="stat-label">Journal Hari Ini</span><span class="stat-value" id="mental-journals">0</span></div>
+          <div class="stat-card"><span class="stat-label">Gratitude Hari Ini</span><span class="stat-value" id="mental-gratitude">0</span></div>
+          <div class="stat-card"><span class="stat-label">Meditasi Hari Ini</span><span class="stat-value" id="mental-meditate">0 min</span></div>
+          <div class="stat-card"><span class="stat-label">Med Streak</span><span class="stat-value" id="mental-streak">0</span></div>
+        </div>
+        <div class="mod-grid">
+          <div class="panel"><div class="panel-header"><h2>Daily Journal / Reflection</h2><button class="btn btn-sm btn-outline" id="btn-add-journal">+</button></div><div id="journal-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Gratitude Journal</h2><button class="btn btn-sm btn-outline" id="btn-add-gratitude">+</button></div><div id="gratitude-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Meditation & Breathing</h2><button class="btn btn-sm btn-outline" id="btn-add-meditation">+</button></div><div id="meditation-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Mental Wellness Check-in</h2><button class="btn btn-sm btn-outline" id="btn-add-wellness">+</button></div><div id="wellness-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Personal Boundaries</h2><button class="btn btn-sm btn-outline" id="btn-add-boundary">+</button></div><div id="boundary-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Weekly Self-Evaluation</h2><button class="btn btn-sm btn-outline" id="btn-add-weekly-eval">+</button></div><div id="weekly-eval-list"></div></div>
+        </div>
+      </section>
   </template>
   <template id="extra-modals">
     <div class="modal" id="modal-workout" hidden>
@@ -154,6 +210,7 @@
     </div>
   </template>
   <script src="modules.js"></script>
+  <script src="modules2.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
