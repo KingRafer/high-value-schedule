@@ -32,6 +32,7 @@
       <a href="#leadership" class="nav-item" data-section="leadership"><span class="nav-icon">♛</span> Leadership</a>
       <a href="#spiritual" class="nav-item" data-section="spiritual"><span class="nav-icon">✦</span> Spiritual</a>
       <a href="#timer" class="nav-item" data-section="timer"><span class="nav-icon">⏱</span> Focus Timer</a>
+      <a href="#workspace" class="nav-item" data-section="workspace"><span class="nav-icon">⚙</span> Workspace</a>
     </nav>
     <div class="sidebar-footer">
       <div class="live-clock" id="sidebar-clock">--:--</div>
@@ -603,6 +604,43 @@
         </div>
       </section>
   </template>
+
+      <section id="workspace" class="section">
+        <div class="page-header"><div><h1>Workspace & Tools</h1><p class="subtitle">Backup, kalender, review, laporan, preferensi, dan pencarian seluruh data</p></div></div>
+        <div class="panel">
+          <div class="panel-header"><h2>Backup & Kalender</h2><span class="hint" id="backup-status">Cadangkan data akunmu secara berkala</span></div>
+          <div class="header-btns">
+            <button class="btn btn-primary btn-sm" id="hvos-export-json">Ekspor JSON</button>
+            <label class="btn btn-outline btn-sm" for="hvos-import-json">Impor JSON</label><input id="hvos-import-json" type="file" accept="application/json,.json" hidden>
+            <button class="btn btn-outline btn-sm" id="hvos-export-ics">Ekspor Kalender .ics</button>
+            <label class="btn btn-outline btn-sm" for="hvos-import-ics">Impor .ics</label><input id="hvos-import-ics" type="file" accept=".ics,text/calendar" hidden>
+          </div>
+          <p class="hint">Impor JSON mengganti data lokal akun ini setelah konfirmasi. Simpan file cadangan di tempat aman.</p>
+          <div class="form-row" style="margin-top:1rem"><div class="form-group"><label>Tambahkan acara ke Google Calendar</label><input id="hvos-gcal-title" placeholder="Judul acara"></div><div class="form-group"><label>Tanggal</label><input id="hvos-gcal-date" type="date"></div><div class="form-group"><label>Waktu</label><input id="hvos-gcal-time" type="time"></div></div>
+          <button class="btn btn-sm btn-outline" id="hvos-gcal-open">Buka Google Calendar</button>
+        </div>
+        <div class="mod-grid" style="margin-top:1rem">
+          <div class="panel"><div class="panel-header"><h2>Review Harian</h2><button class="btn btn-sm btn-outline" id="hvos-save-daily-review">Simpan</button></div>
+            <div class="form-group"><label>Apa yang berjalan baik?</label><textarea id="hvos-review-good" rows="2"></textarea></div>
+            <div class="form-group"><label>Apa yang perlu diperbaiki?</label><textarea id="hvos-review-improve" rows="2"></textarea></div>
+            <div class="form-group"><label>Prioritas besok</label><textarea id="hvos-review-next" rows="2"></textarea></div>
+          </div>
+          <div class="panel"><div class="panel-header"><h2>Review Mingguan</h2><button class="btn btn-sm btn-outline" id="hvos-save-weekly-review">Simpan</button></div>
+            <div class="form-group"><label>Pencapaian utama</label><textarea id="hvos-week-good" rows="2"></textarea></div>
+            <div class="form-group"><label>Pelajaran minggu ini</label><textarea id="hvos-week-learn" rows="2"></textarea></div>
+            <div class="form-group"><label>Fokus minggu depan</label><textarea id="hvos-week-next" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h2>Laporan Mingguan</h2><button class="btn btn-sm btn-outline" id="hvos-refresh-report">Perbarui</button></div><div id="hvos-week-report" class="stats-row four"></div></div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h2>Trading Analytics</h2><div class="header-btns"><select id="hvos-trade-period"><option value="all">Semua periode</option><option value="30">30 hari</option><option value="90">90 hari</option><option value="365">1 tahun</option></select><select id="hvos-trade-pair"><option value="all">Semua pair</option></select></div></div><div id="hvos-trade-stats" class="stats-row four"></div><canvas id="hvos-equity-chart" height="180" style="width:100%;max-height:220px"></canvas></div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h2>Keuangan & Anggaran</h2></div><div id="hvos-finance-report" class="stats-row four"></div><div id="hvos-budget-breakdown"></div><div id="hvos-finance-chart" style="display:grid;gap:.5rem;margin-top:1rem"></div><div class="form-row" style="margin-top:1rem"><div class="form-group"><label>Kategori anggaran</label><input id="hvos-budget-category" placeholder="Transport"></div><div class="form-group"><label>Batas bulanan (Rp)</label><input id="hvos-budget-limit" type="number" min="0" step="1"></div><button class="btn btn-sm btn-primary" id="hvos-add-budget">Tambah anggaran</button></div><div class="form-row"><div class="form-group"><label>Target tabungan (nama)</label><input id="hvos-saving-name" placeholder="Dana pendidikan"></div><div class="form-group"><label>Target (Rp)</label><input id="hvos-saving-target" type="number" min="0"></div><div class="form-group"><label>Terkumpul (Rp)</label><input id="hvos-saving-current" type="number" min="0"></div><button class="btn btn-sm btn-outline" id="hvos-add-saving">Simpan target</button></div><div id="hvos-saving-list"></div></div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h2>Pencarian Global</h2><input id="hvos-global-content-search" type="search" placeholder="Cari task, catatan, goal, habit..." style="max-width:360px"></div><div id="hvos-global-results"></div></div>
+        <div class="panel" style="margin-top:1rem"><div class="panel-header"><h2>Preferensi Workspace</h2><button class="btn btn-sm btn-outline" id="hvos-save-preferences">Simpan preferensi</button></div>
+          <div class="form-row"><div class="form-group"><label>Tampilan</label><select id="hvos-theme"><option value="dark">Gelap</option><option value="light">Terang</option><option value="system">Ikuti perangkat</option></select></div><div class="form-group"><label>Notifikasi</label><button class="btn btn-sm btn-outline" id="hvos-enable-notifications">Aktifkan notifikasi</button></div><div class="form-group"><label>Modul yang digunakan</label><div id="hvos-module-options" class="mod-grid"></div></div></div>
+          <div class="form-group"><label>Widget dashboard yang ditampilkan</label><div id="hvos-widget-options" class="mod-grid"></div></div>
+          <p class="hint" id="hvos-offline-status">Memeriksa koneksi…</p>
+        </div>
+      </section>
   <template id="extra-modals">
     <div class="modal" id="modal-workout" hidden>
       <div class="modal-header"><h3>Log Workout</h3><button class="modal-close" data-close>&times;</button></div>
