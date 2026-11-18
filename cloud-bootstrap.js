@@ -78,7 +78,7 @@
   }
   $("hvos-auth-switch").addEventListener("click", () => { mode = mode === "login" ? "register" : "login"; renderMode(); });
   async function request(url, options = {}) {
-    const response = await fetch(url, { credentials: "same-origin", headers: { "Content-Type": "application/json" }, ...options });
+    const response = await fetch(url, { credentials: "same-origin", cache: "no-store", headers: { "Content-Type": "application/json", "Cache-Control": "no-cache" }, ...options });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Permintaan gagal.");
     return payload;
