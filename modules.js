@@ -223,8 +223,9 @@
     if (m) m.hidden = false;
   }
 
-  // Wire physical buttons after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // Scripts are loaded after cloud login, often after DOMContentLoaded has fired.
+  // Bind immediately when the DOM is ready; otherwise wait once for it.
+  function bindModuleEvents() {
     document.getElementById('btn-add-workout')?.addEventListener('click', openWorkoutModal);
     document.getElementById('btn-add-wo-ex')?.addEventListener('click', () => {
       const area = document.getElementById('wo-exercises-area');
@@ -431,7 +432,13 @@
       document.getElementById('modal-overlay').hidden = true;
       renderFinance();
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindModuleEvents, { once: true });
+  } else {
+    bindModuleEvents();
+  }
 
   function openTxModal(type) {
     const form = document.getElementById('form-tx');
