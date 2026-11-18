@@ -839,7 +839,8 @@ document.getElementById('form-block')?.addEventListener('submit', e => {
     end: document.getElementById('block-end').value,
     recur: document.getElementById('block-recur').value,
   };
-  if (!data.title) return;
+  if (!data.title.trim()) { document.getElementById('task-title').setCustomValidity('Judul task wajib diisi.'); document.getElementById('task-title').reportValidity(); return; }
+  document.getElementById('task-title').setCustomValidity('');
   if (id) {
     const b = blocks.find(x => x.id === id);
     if (b) Object.assign(b, data);
@@ -1045,7 +1046,9 @@ document.getElementById('form-trade')?.addEventListener('submit', e => {
     exit: document.getElementById('trade-exit').value.trim(),
     notes: document.getElementById('trade-notes').value.trim(),
   };
-  if (!data.pair) return;
+  if (!data.date) { document.getElementById('trade-date').reportValidity(); return; }
+  if (!data.pair.trim()) { document.getElementById('trade-pair').setCustomValidity('Pair wajib diisi.'); document.getElementById('trade-pair').reportValidity(); return; }
+  document.getElementById('trade-pair').setCustomValidity('');
   if (id) { const t = trades.find(x => x.id === id); if (t) Object.assign(t, data); }
   else trades.push({ id: uid(), ...data, created: Date.now() });
   saveTrades();
