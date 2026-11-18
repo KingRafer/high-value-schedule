@@ -283,10 +283,10 @@
     const clear = document.getElementById('global-search-clear');
     const nav = document.querySelector('.sidebar-nav');
     if (!input || !nav) return;
-    const items = Array.from(nav.querySelectorAll('.nav-item'));
+    function getItems() { return Array.from(nav.querySelectorAll('.nav-item')); }
     function filter() {
       const q = input.value.trim().toLocaleLowerCase('id');
-      items.forEach(item => {
+      getItems().forEach(item => {
         const match = !q || item.textContent.toLocaleLowerCase('id').includes(q);
         item.hidden = !match;
       });
@@ -297,7 +297,7 @@
     input.addEventListener('keydown', e => {
       if (e.key === 'Escape') { input.value = ''; filter(); input.blur(); }
       if (e.key === 'Enter') {
-        const first = items.find(item => !item.hidden);
+        const first = getItems().find(item => !item.hidden);
         if (first) first.click();
       }
     });
