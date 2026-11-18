@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   try {
     const email = String(req.body?.email || "").trim().toLowerCase();
     const password = String(req.body?.password || "");
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || password.length > 200) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length > 200) {
       return res.status(400).json({ error: "Email atau password tidak valid." });
     }
 
