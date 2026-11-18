@@ -73,8 +73,6 @@
   })();
   </script>
   <template id="extra-sections">
-      <!-- Physical, Grooming, Finance, Career, Intellect, Mental kept via prior extra-sections;
-           full block regenerated below for reliability -->
       <section id="physical" class="section">
         <div class="page-header"><div><h1>Physical Excellence</h1></div>
           <div class="header-btns"><button class="btn btn-outline btn-sm" id="btn-log-nutrition">Nutrition</button><button class="btn btn-primary btn-sm" id="btn-add-workout">+ Workout</button></div></div>
@@ -184,11 +182,11 @@
         </div>
       </section>
       <section id="social" class="section">
-        <div class="page-header"><div><h1>Social Intelligence & Relationships</h1><p class="subtitle">Communication, network, EQ, mentorship</p></div></div>
+        <div class="page-header"><div><h1>Social Intelligence</h1></div></div>
         <div class="stats-row four">
           <div class="stat-card"><span class="stat-label">Relationships</span><span class="stat-value" id="social-rel">0</span></div>
           <div class="stat-card"><span class="stat-label">Friends</span><span class="stat-value" id="social-friends">0</span></div>
-          <div class="stat-card"><span class="stat-label">Upcoming Events</span><span class="stat-value" id="social-events">0</span></div>
+          <div class="stat-card"><span class="stat-label">Events</span><span class="stat-value" id="social-events">0</span></div>
           <div class="stat-card"><span class="stat-label">Mentors</span><span class="stat-value" id="social-mentors">0</span></div>
         </div>
         <div class="mod-grid">
@@ -196,58 +194,58 @@
           <div class="panel"><div class="panel-header"><h2>Social Confidence</h2><button class="btn btn-sm btn-outline" id="btn-log-social-confidence">Log</button></div><div id="social-confidence-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Relationships</h2><button class="btn btn-sm btn-outline" id="btn-add-relationship">+</button></div><div id="relationship-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Family</h2><button class="btn btn-sm btn-outline" id="btn-add-family">+</button></div><div id="family-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Friendship</h2><button class="btn btn-sm btn-outline" id="btn-add-friend">+</button></div><div id="friend-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Friends</h2><button class="btn btn-sm btn-outline" id="btn-add-friend">+</button></div><div id="friend-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Social Calendar</h2><button class="btn btn-sm btn-outline" id="btn-add-social-event">+</button></div><div id="social-event-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Public Speaking</h2><button class="btn btn-sm btn-outline" id="btn-add-speaking">+</button></div><div id="speaking-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Negotiation</h2><button class="btn btn-sm btn-outline" id="btn-add-negotiation">+</button></div><div id="negotiation-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Conflict Resolution</h2><button class="btn btn-sm btn-outline" id="btn-add-conflict">+</button></div><div id="conflict-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Emotional Intelligence</h2><button class="btn btn-sm btn-outline" id="btn-add-eq">Log</button></div><div id="eq-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>EQ Log</h2><button class="btn btn-sm btn-outline" id="btn-add-eq">Log</button></div><div id="eq-list"></div></div>
           <div class="panel panel-wide"><div class="panel-header"><h2>Mentorship</h2><button class="btn btn-sm btn-outline" id="btn-add-mentor">+</button></div><div id="mentor-list"></div></div>
         </div>
       </section>
       <section id="leadership" class="section">
-        <div class="page-header"><div><h1>Leadership & Character</h1><p class="subtitle">Integrity, accountability, decisions, courage</p></div></div>
+        <div class="page-header"><div><h1>Leadership & Character</h1></div></div>
         <div class="stats-row four">
           <div class="stat-card"><span class="stat-label">Open Commitments</span><span class="stat-value" id="lead-open">0</span></div>
           <div class="stat-card"><span class="stat-label">Decisions</span><span class="stat-value" id="lead-decisions">0</span></div>
-          <div class="stat-card"><span class="stat-label">Courage Acts</span><span class="stat-value" id="lead-courage">0</span></div>
-          <div class="stat-card"><span class="stat-label">Milestones Done</span><span class="stat-value" id="lead-milestones">0</span></div>
+          <div class="stat-card"><span class="stat-label">Courage</span><span class="stat-value" id="lead-courage">0</span></div>
+          <div class="stat-card"><span class="stat-label">Milestones</span><span class="stat-value" id="lead-milestones">0</span></div>
         </div>
         <div class="mod-grid">
-          <div class="panel"><div class="panel-header"><h2>Leadership Development</h2><button class="btn btn-sm btn-outline" id="btn-add-lead-dev">+</button></div><div id="leadership-dev-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Integrity Tracker</h2><button class="btn btn-sm btn-outline" id="btn-add-integrity">+</button></div><div id="integrity-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Leadership Dev</h2><button class="btn btn-sm btn-outline" id="btn-add-lead-dev">+</button></div><div id="leadership-dev-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Integrity</h2><button class="btn btn-sm btn-outline" id="btn-add-integrity">+</button></div><div id="integrity-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Accountability</h2><button class="btn btn-sm btn-outline" id="btn-add-accountability">+</button></div><div id="accountability-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Decision Journal</h2><button class="btn btn-sm btn-outline" id="btn-add-decision">+</button></div><div id="decision-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Decisions</h2><button class="btn btn-sm btn-outline" id="btn-add-decision">+</button></div><div id="decision-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Responsibilities</h2><button class="btn btn-sm btn-outline" id="btn-add-responsibility">+</button></div><div id="responsibility-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Problem-Solving</h2><button class="btn btn-sm btn-outline" id="btn-add-problem">+</button></div><div id="problem-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Strategic Thinking</h2><button class="btn btn-sm btn-outline" id="btn-add-strategy">+</button></div><div id="strategy-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Leadership Principles</h2><button class="btn btn-sm btn-outline" id="btn-edit-principles">Edit</button></div><div id="leadership-principles-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Strategy</h2><button class="btn btn-sm btn-outline" id="btn-add-strategy">+</button></div><div id="strategy-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Principles</h2><button class="btn btn-sm btn-outline" id="btn-edit-principles">Edit</button></div><div id="leadership-principles-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Code of Conduct</h2><button class="btn btn-sm btn-outline" id="btn-edit-code">Edit</button></div><div id="code-of-conduct-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Character Evaluation</h2><button class="btn btn-sm btn-outline" id="btn-add-character-eval">Log</button></div><div id="character-eval-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Character Eval</h2><button class="btn btn-sm btn-outline" id="btn-add-character-eval">Log</button></div><div id="character-eval-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Courage</h2><button class="btn btn-sm btn-outline" id="btn-add-courage">+</button></div><div id="courage-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Leadership Milestones</h2><button class="btn btn-sm btn-outline" id="btn-add-lead-milestone">+</button></div><div id="lead-milestone-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Milestones</h2><button class="btn btn-sm btn-outline" id="btn-add-lead-milestone">+</button></div><div id="lead-milestone-list"></div></div>
         </div>
       </section>
       <section id="spiritual" class="section">
-        <div class="page-header"><div><h1>Spirituality & Purpose</h1><p class="subtitle">Values, faith, mission, legacy</p></div></div>
+        <div class="page-header"><div><h1>Spirituality & Purpose</h1></div></div>
         <div class="stats-row four">
           <div class="stat-card"><span class="stat-label">Prayer Today</span><span class="stat-value" id="spirit-prayers">0</span></div>
-          <div class="stat-card"><span class="stat-label">Mindfulness Today</span><span class="stat-value" id="spirit-mindful">0</span></div>
-          <div class="stat-card"><span class="stat-label">Core Values</span><span class="stat-value" id="spirit-values">0</span></div>
+          <div class="stat-card"><span class="stat-label">Mindfulness</span><span class="stat-value" id="spirit-mindful">0</span></div>
+          <div class="stat-card"><span class="stat-label">Values</span><span class="stat-value" id="spirit-values">0</span></div>
           <div class="stat-card"><span class="stat-label">Inner Peace</span><span class="stat-value" id="spirit-peace">—</span></div>
         </div>
         <div class="mod-grid">
-          <div class="panel"><div class="panel-header"><h2>Life Purpose Journal</h2><button class="btn btn-sm btn-outline" id="btn-add-purpose">+</button></div><div id="purpose-journal-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Personal Values</h2><button class="btn btn-sm btn-outline" id="btn-add-value">+</button></div><div id="values-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Purpose Journal</h2><button class="btn btn-sm btn-outline" id="btn-add-purpose">+</button></div><div id="purpose-journal-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Values</h2><button class="btn btn-sm btn-outline" id="btn-add-value">+</button></div><div id="values-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Spiritual Routine</h2><button class="btn btn-sm btn-outline" id="btn-edit-spiritual-routine">Edit</button></div><div id="spiritual-routine-list" class="routine-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Prayer Log</h2><button class="btn btn-sm btn-outline" id="btn-add-prayer">Log</button></div><div id="prayer-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Mindfulness</h2><button class="btn btn-sm btn-outline" id="btn-add-mindfulness">+</button></div><div id="mindfulness-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Life Philosophy</h2><button class="btn btn-sm btn-outline" id="btn-add-philosophy">+</button></div><div id="philosophy-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Moral Development</h2><button class="btn btn-sm btn-outline" id="btn-add-moral">+</button></div><div id="moral-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Philosophy</h2><button class="btn btn-sm btn-outline" id="btn-add-philosophy">+</button></div><div id="philosophy-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Moral Dev</h2><button class="btn btn-sm btn-outline" id="btn-add-moral">+</button></div><div id="moral-list"></div></div>
           <div class="panel"><div class="panel-header"><h2>Inner Peace</h2><button class="btn btn-sm btn-outline" id="btn-add-peace">Log</button></div><div id="peace-list"></div></div>
           <div class="panel panel-wide"><div class="panel-header"><h2>Mission Statement</h2><button class="btn btn-sm btn-outline" id="btn-edit-mission">Edit</button></div><div id="mission-statement"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Faith Development</h2><button class="btn btn-sm btn-outline" id="btn-add-faith">+</button></div><div id="faith-list"></div></div>
-          <div class="panel"><div class="panel-header"><h2>Legacy Planning</h2><button class="btn btn-sm btn-outline" id="btn-add-legacy">+</button></div><div id="legacy-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Faith</h2><button class="btn btn-sm btn-outline" id="btn-add-faith">+</button></div><div id="faith-list"></div></div>
+          <div class="panel"><div class="panel-header"><h2>Legacy</h2><button class="btn btn-sm btn-outline" id="btn-add-legacy">+</button></div><div id="legacy-list"></div></div>
         </div>
       </section>
   </template>
@@ -281,6 +279,7 @@
   <script src="modules.js"></script>
   <script src="modules2.js"></script>
   <script src="modules3.js"></script>
+  <script src="modules4.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
