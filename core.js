@@ -420,13 +420,13 @@ function renderHabits() {
     }).join('') || '<p class="empty-hint">Belum ada habit. Tambah custom habit.</p>';
 
     tracker.querySelectorAll('.habit-row').forEach(row => {
-      row.addEventListener('click', e => {
+      row.addEventListener('click', async e => {
         const action = e.target.closest('[data-action]')?.dataset.action;
         const id = row.dataset.id;
         if (action === 'toggle') { toggleHabit(id); }
         if (action === 'edit') openHabitModal(id);
         if (action === 'delete') {
-          if (confirm('Hapus habit ini?')) {
+          if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus habit ini?') : confirm('Hapus habit ini?')) {
             habits = habits.filter(h => h.id !== id);
             save(KEYS.habits, habits);
             renderHabits();
@@ -524,9 +524,9 @@ function renderChallenges() {
   }).join('');
 
   el.querySelectorAll('[data-action="del-challenge"]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const id = btn.closest('.challenge-card').dataset.id;
-      if (confirm('Hapus challenge?')) {
+      if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus challenge?') : confirm('Hapus challenge?')) {
         challenges = challenges.filter(c => c.id !== id);
         save(KEYS.challenges, challenges);
         renderChallenges();
@@ -642,12 +642,12 @@ function renderDayView() {
     : '<p class="empty-hint">Belum ada time block. Klik "+ Time Block" untuk menambah.</p>';
 
   list.querySelectorAll('.tblock').forEach(row => {
-    row.addEventListener('click', e => {
+    row.addEventListener('click', async e => {
       const action = e.target.closest('[data-action]')?.dataset.action;
       const id = row.dataset.id;
       if (action === 'edit-block') openBlockModal(id);
       if (action === 'del-block') {
-        if (confirm('Hapus block ini?')) {
+        if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus block ini?') : confirm('Hapus block ini?')) {
           blocks = blocks.filter(b => b.id !== id);
           save(KEYS.blocks, blocks);
           renderSchedule();
@@ -1000,12 +1000,12 @@ function renderTrades() {
   document.getElementById('trade-count').textContent = trades.length;
 
   tbody.querySelectorAll('tr').forEach(row => {
-    row.addEventListener('click', e => {
+    row.addEventListener('click', async e => {
       const action = e.target.closest('[data-action]')?.dataset.action;
       const id = row.dataset.id;
       if (action === 'edit-trade') openTradeModal(id);
       if (action === 'del-trade') {
-        if (confirm('Hapus trade?')) { trades = trades.filter(t => t.id !== id); saveTrades(); }
+        if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus trade?') : confirm('Hapus trade?')) { trades = trades.filter(t => t.id !== id); saveTrades(); }
       }
     });
   });
@@ -1084,12 +1084,12 @@ function renderGoals() {
     </div>`).join('');
   if (empty) empty.hidden = goals.length > 0;
   grid.querySelectorAll('.goal-card').forEach(card => {
-    card.addEventListener('click', e => {
+    card.addEventListener('click', async e => {
       const action = e.target.closest('[data-action]')?.dataset.action;
       const id = card.dataset.id;
       if (action === 'edit-goal') openGoalModal(id);
       if (action === 'del-goal') {
-        if (confirm('Hapus?')) { goals = goals.filter(g => g.id !== id); saveGoals(); }
+        if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus goal ini?') : confirm('Hapus?')) { goals = goals.filter(g => g.id !== id); saveGoals(); }
       }
     });
   });
