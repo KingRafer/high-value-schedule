@@ -1,54 +1,55 @@
-# High Value Dashboard
+# High Value OS (HVOS)
 
-Personal dashboard untuk **pria high value** — kelola aktivitas harian, trading journal, dan cita-cita dalam satu tempat.
+Personal operating system untuk **pria high value**.
 
-**Repo:** https://github.com/KingRafer/high-value-schedule
-
-## Fitur
-
-### 1. Hari Ini (Overview)
-- Ringkasan checklist aktivitas
-- Progress target profit harian
-- Impian yang sedang dikejar
-
-### 2. Aktivitas (Custom + Checklist)
-- Tambah / edit / hapus aktivitas sendiri
-- Centang yang sudah selesai
-- Filter: Semua / Belum / Selesai
-- Kategori: Focus, Body, Mind, Rest, Lainnya
-- Bisa import dari template Builder / Athlete / Balanced
-
-### 3. Trading Journal
-- Catat setiap trade (pair, arah, entry, exit, P/L, catatan)
-- Total P/L, Win Rate, jumlah trade
-- **Target Profit Harian** + progress bar
-- Riwayat lengkap bisa diedit / dihapus
-
-### 4. Impian & Cita-cita
-- Tulis visi jangka panjang
-- Progress % + target tahun
-- Kategori: Keuangan, Bisnis, Kesehatan, Hubungan, Skill, Lifestyle
-
-### 5. Jadwal Referensi
-- Template routine high value (Builder / Athlete / Balanced)
-- Bisa langsung dijadikan daftar aktivitas
-
-## Cara Pakai
-
-1. Clone atau download repo
-2. Buka `index.html` di browser
-3. Atau aktifkan **GitHub Pages**:
-   - Settings → Pages → Deploy from branch `main` → Save
-   - Site akan live di: `https://kingrafer.github.io/high-value-schedule/`
-
-Semua data disimpan di **localStorage** browser (tidak hilang selama tidak clear data).
-
-## Tech
-
-- Pure HTML + CSS + Vanilla JS
-- Tidak perlu build / npm
-- Fully responsive
+**Repo:** https://github.com/KingRafer/high-value-schedule  
+Buka `index.html` atau aktifkan GitHub Pages.
 
 ---
 
-**Built for men who take ownership of their time and goals.**
+## 1. Main Dashboard
+- Personalized greeting (pagi/siang/sore/malam)
+- **Daily Performance Score** (0–100) dari habits + tasks + routines
+- Today's priorities & checklist
+- Habit completion hari ini
+- Today's schedule snapshot
+- Weekly progress bars
+- Monthly statistics (tasks, habit check-ins, pomodoros, discipline rate)
+- Quick actions
+
+## 2. Schedule & Time Management
+- **Day view** — time blocks per jam
+- **Week view** — overview 7 hari
+- **Month calendar** — klik tanggal untuk buka hari itu
+- Time blocking (Focus / Meeting / Workout / Personal / Routine)
+- Recurring: daily, weekdays, weekly
+- **Morning & Evening routines** (bisa diedit)
+- Workout days selector
+- Default work blocks reference
+
+## 3. Discipline & Habit System
+- Daily habit tracker + checkbox
+- **Streak counter** per habit + best streak
+- Morning checklist & Night checklist
+- Consistency chart 7 hari
+- Custom habits (tambah/edit/hapus)
+- Habit challenges (30-day dll)
+- Discipline rate
+
+## 4. Lainnya (tetap ada)
+- **Tasks** — custom, prioritas, kategori, checklist
+- **Trading Journal** — P/L, win rate, target profit harian
+- **Impian / Goals** — progress %, target tahun
+- **Focus Timer** — Pomodoro 25/5/15 + Deep Work 50/90, sesi tercatat
+
+---
+
+## Data
+Semua disimpan di **localStorage** browser. Tidak hilang selama tidak clear data.
+
+## Tech
+Pure HTML + CSS + Vanilla JS. Tidak perlu build.
+
+---
+
+**Built for men who take ownership of their time, habits, and goals.**
