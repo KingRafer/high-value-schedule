@@ -95,6 +95,16 @@
     intercept("btn-add-work-prio",async function(){var v=await dialog("Work Priority",[{name:"title",label:"Prioritas kerja",required:true}]);if(v){var a=arr("hvos_work_priorities");a.push({id:"prio-"+Date.now(),title:v.title.trim(),date:today(),done:false});write("hvos_work_priorities",a);status("Work priority ditambahkan.");}});
     intercept("btn-add-adv-challenge",async function(){var v=await dialog("Adventure Challenge",[{name:"title",label:"Nama challenge",required:true},{name:"notes",label:"Catatan",type:"textarea"}]);if(v){var a=arr("hvos_challenges");a.push({id:"adv-"+Date.now(),title:v.title.trim(),notes:v.notes||"",done:false});write("hvos_challenges",a);status("Challenge ditambahkan.");}});
   }
-  function boot(){buildPrefs();reviews();trading();finance();taskFields();bindTaskEnhancements();onboarding();if($("hvos-gcal-date"))$("hvos-gcal-date").value=today();if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(function(e){console.warn("HVOS PWA",e);});var tb=$("trade-tbody");if(tb)new MutationObserver(function(){trading();}).observe(tb,{childList:true,subtree:true});}
+  function validateForms(){
+    document.querySelectorAll('input[type="number"]').forEach(function(input){if(input.id!=="trade-pnl"&&!input.hasAttribute("min"))input.min="0";});
+    document.addEventListener("input",function(e){if(e.target.setCustomValidity)e.target.setCustomValidity("");},true);
+    document.addEventListener("submit",function(e){
+      var form=e.target,first=null;
+      form.querySelectorAll("input[required],textarea[required]").forEach(function(el){if(!String(el.value||"").trim()){el.setCustomValidity("Bagian ini wajib diisi.");if(!first)first=el;}else el.setCustomValidity("");});
+      form.querySelectorAll('input[type="number"]').forEach(function(el){if(!el.value)return;var min=el.min===""?0:Number(el.min);if(el.id!=="trade-pnl"&&Number(el.value)<min){el.setCustomValidity("Nominal tidak boleh negatif.");if(!first)first=el;}else el.setCustomValidity("");});
+      if(first){e.preventDefault();e.stopImmediatePropagation();first.reportValidity();first.focus();}
+    },true);
+  }
+  function boot(){validateForms();buildPrefs();reviews();trading();finance();taskFields();bindTaskEnhancements();onboarding();if($("hvos-gcal-date"))$("hvos-gcal-date").value=today();if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(function(e){console.warn("HVOS PWA",e);});var tb=$("trade-tbody");if(tb)new MutationObserver(function(){trading();}).observe(tb,{childList:true,subtree:true});}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
 })();
