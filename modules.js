@@ -178,7 +178,8 @@
         <button class="btn-icon" data-act="del-prog" data-id="${p.id}">✕</button></div>`
       ).join('') : '<p class="empty-hint">Catat progress transformasi tubuh di sini.</p>';
       pEl.querySelectorAll('[data-act="del-prog"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus progress note ini?'))) return;
           progressNotes = progressNotes.filter(p => p.id !== btn.dataset.id);
           save(K.progressNotes, progressNotes);
           renderPhysical();
@@ -428,11 +429,13 @@
     document.getElementById('form-tx')?.addEventListener('submit', e => {
       e.preventDefault();
       const type = document.getElementById('tx-type').value;
-      const amount = Number(document.getElementById('tx-amount').value) || 0;
+      const amount = Number(document.getElementById('tx-amount').value);
+      if (!Number.isFinite(amount) || amount <= 0) { document.getElementById('tx-amount').setCustomValidity('Nominal harus lebih dari nol.'); document.getElementById('tx-amount').reportValidity(); return; }
+      document.getElementById('tx-amount').setCustomValidity('');
       const category = document.getElementById('tx-category').value.trim() || 'Lainnya';
       const note = document.getElementById('tx-note').value.trim();
-      const date = document.getElementById('tx-date').value || todayStr();
-      if (!amount) return;
+      const date = document.getElementById('tx-date').value;
+      if (!date) { document.getElementById('tx-date').reportValidity(); return; }
       transactions.push({ id: uid(), type, amount, category, note, date });
       save(K.transactions, transactions);
       document.getElementById('modal-overlay').hidden = true;
@@ -490,7 +493,8 @@
         });
       });
       remEl.querySelectorAll('[data-act="del-rem"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus reminder grooming ini?'))) return;
           groomReminders = groomReminders.filter(x => x.id !== btn.dataset.id);
           save(K.groomingReminders, groomReminders);
           renderGrooming();
@@ -506,7 +510,8 @@
           <button class="btn-icon" style="margin-left:auto" data-act="del-frag" data-id="${f.id}">✕</button></div>`
       ).join('') : '<p class="empty-hint">Belum ada parfum di koleksi.</p>';
       fEl.querySelectorAll('[data-act="del-frag"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus fragrance ini?'))) return;
           fragrances = fragrances.filter(f => f.id !== btn.dataset.id);
           save(K.fragrances, fragrances);
           renderGrooming();
@@ -522,7 +527,8 @@
           <button class="btn-icon" style="margin-left:auto" data-act="del-ward" data-id="${w.id}">✕</button></div>`
       ).join('') : '<p class="empty-hint">Belum ada item wardrobe.</p>';
       wEl.querySelectorAll('[data-act="del-ward"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus wardrobe ini?'))) return;
           wardrobe = wardrobe.filter(w => w.id !== btn.dataset.id);
           save(K.wardrobe, wardrobe);
           renderGrooming();
@@ -560,8 +566,9 @@
         });
       });
       aEl.querySelectorAll('[data-act="del-appear"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const id = btn.closest('.data-row').dataset.id;
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus appearance goal ini?'))) return;
           appearGoals = appearGoals.filter(x => x.id !== id);
           save(K.appearGoals, appearGoals);
           renderGrooming();
@@ -643,8 +650,9 @@
           <button class="btn-icon" data-act="del-tx">✕</button>
         </div>`).join('') : '<p class="empty-hint">Belum ada transaksi.</p>';
       txEl.querySelectorAll('[data-act="del-tx"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const id = btn.closest('.data-row').dataset.id;
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus transaksi ini?'))) return;
           transactions = transactions.filter(t => t.id !== id);
           save(K.transactions, transactions);
           renderFinance();
@@ -667,7 +675,8 @@
         </div>`;
       }).join('') : '<p class="empty-hint">Belum ada budget category.</p>';
       bEl.querySelectorAll('[data-act="del-budget"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus budget ini?'))) return;
           budgets = budgets.filter(b => b.id !== btn.dataset.id);
           save(K.budgets, budgets);
           renderFinance();
@@ -686,7 +695,8 @@
         </div>`
       ).join('') : '<p class="empty-hint">Tidak ada utang tercatat. Bagus.</p>';
       dEl.querySelectorAll('[data-act="del-debt"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus utang ini?'))) return;
           debts = debts.filter(d => d.id !== btn.closest('.data-row').dataset.id);
           save(K.debts, debts);
           renderFinance();
@@ -705,7 +715,8 @@
         </div>`
       ).join('') : '<p class="empty-hint">Belum ada aset / investasi.</p>';
       aEl.querySelectorAll('[data-act="del-asset"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus aset ini?'))) return;
           assets = assets.filter(a => a.id !== btn.closest('.data-row').dataset.id);
           save(K.assets, assets);
           renderFinance();
@@ -736,7 +747,8 @@
         });
       });
       gEl.querySelectorAll('[data-act="del-fgoal"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+          if (window.HVOSDialogs && !(await window.HVOSDialogs.confirm('Hapus financial goal ini?'))) return;
           finGoals = finGoals.filter(g => g.id !== btn.closest('.data-row').dataset.id);
           save(K.finGoals, finGoals);
           renderFinance();
