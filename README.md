@@ -1,53 +1,34 @@
 # High Value OS (HVOS)
 
-Personal OS untuk **pria high value**.
+Personal operating system untuk **pria high value**.
 
 **Repo:** https://github.com/KingRafer/high-value-schedule
 
-## Modules
+## All Modules (1–12)
 
-### Core
-1. Dashboard — performance score, priorities, habits, weekly/monthly stats
-2. Schedule — day/week/month, time blocking, routines
-3. Discipline — habit tracker, streaks, challenges
-4. Tasks — custom checklist + priorities
-5. Trading — journal, P/L, target profit
-6. Impian — long-term goals
-7. Focus Timer — Pomodoro + deep work
-
-### Body & Style
-8. **Physical** — workout, body metrics, nutrition, sleep, recovery
-9. **Grooming** — skincare, haircare, wardrobe, fragrance, appearance goals
-10. **Finance** — income/expense, budget, net worth, emergency fund, FI goals
-
-### Mind & Career
-11. **Career & Business**
-    - Professional goals & milestones
-    - Project management
-    - Daily work priorities
-    - Skill development tracker
-    - Networking + last-contact
-    - Meeting schedule
-    - Business idea library
-    - Revenue tracking
-
-12. **Intellectual Development**
-    - Reading tracker / book library
-    - Book notes & highlights
-    - Course tracker + progress
-    - Daily learning goals
-    - Personal knowledge base
-    - Critical thinking journal
-
-13. **Mental Strength**
-    - Daily journaling / self-reflection
-    - Gratitude journal
-    - Meditation & breathing log
-    - Mental wellness check-in (mood/stress)
-    - Personal boundaries
-    - Weekly self-evaluation
+| # | Module | Highlights |
+|---|--------|------------|
+| 1 | Dashboard | Score, priorities, weekly/monthly stats |
+| 2 | Schedule | Day/week/month, time blocking, routines |
+| 3 | Discipline | Habits, streaks, challenges |
+| 4 | Tasks | Custom checklist + priorities |
+| 5 | Trading | Journal, P/L, targets |
+| 6 | Impian | Long-term goals |
+| 7 | Focus Timer | Pomodoro + deep work |
+| 8 | Physical | Workout, body, nutrition, sleep |
+| 9 | Grooming | Skincare, wardrobe, fragrance |
+| 10 | Finance | Income/expense, net worth, FI |
+| 11 | Career | Projects, skills, network, revenue |
+| 12 | Intellectual | Books, courses, knowledge base |
+| 13 | Mental | Journal, gratitude, meditation |
+| 14 | **Social** | Relationships, EQ, speaking, mentorship |
+| 15 | **Leadership** | Integrity, accountability, courage, code of conduct |
+| 16 | **Spiritual** | Purpose, values, prayer, mission, legacy |
 
 ## Tech
-Pure HTML/CSS/JS + localStorage. No build.
+HTML + CSS + Vanilla JS · localStorage · no build
 
-Buka `index.html` (butuh internet sekali untuk load base scripts) atau GitHub Pages.
+Buka `index.html` (butuh internet sekali untuk load base) atau aktifkan GitHub Pages.
+
+---
+**Built for men who take ownership of their entire life.**
