@@ -10,7 +10,7 @@
     reputation: 'hvos_reputation', achievements: 'hvos_achievements', publicImage: 'hvos_public_image',
     positioning: 'hvos_positioning', audienceGrowth: 'hvos_audience_growth', brandMilestones: 'hvos_brand_milestones',
     bucketList: 'hvos_bucket_list', travelGoals: 'hvos_travel_goals', adventures: 'hvos_adventures',
-    experiences: 'hvos_experiences', challenges: 'hvos_challenges', outdoor: 'hvos_outdoor',
+    experiences: 'hvos_experiences', challenges: 'hvos_adventure_challenges', outdoor: 'hvos_outdoor',
     hobbies: 'hvos_hobbies', cultural: 'hvos_cultural', expJournal: 'hvos_exp_journal',
     annualAdventure: 'hvos_annual_adventure', achievementArchive: 'hvos_achievement_archive', dreamDest: 'hvos_dream_dest',
     emergencyPlan: 'hvos_emergency_plan', emergencyContacts: 'hvos_emergency_contacts', docRecords: 'hvos_doc_records',
@@ -71,7 +71,13 @@
   let travelGoals = load(K.travelGoals, []);
   let adventures = load(K.adventures, []);
   let experiences = load(K.experiences, []);
-  let challenges = load(K.challenges, []);
+  let challenges = load(K.challenges, null);
+  if (!Array.isArray(challenges)) {
+    const legacyChallenges = load('hvos_challenges', []);
+    challenges = legacyChallenges.filter(item => item && (item.title || item.notes !== undefined));
+    save('hvos_challenges', legacyChallenges.filter(item => !item || (!item.title && item.notes === undefined)));
+    save(K.challenges, challenges);
+  }
   let outdoor = load(K.outdoor, []);
   let hobbies = load(K.hobbies, []);
   let cultural = load(K.cultural, []);
