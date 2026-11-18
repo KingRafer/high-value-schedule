@@ -63,6 +63,7 @@
   document.body.appendChild(root);
 
   let mode = "login";
+  let appStarting = false;
   const $ = id => document.getElementById(id);
   const error = message => { $("hvos-auth-error").textContent = message || ""; };
   function renderMode() {
@@ -83,6 +84,8 @@
     return payload;
   }
   async function startApp(user) {
+    if (appStarting) return;
+    appStarting = true;
     try {
       const payload = await request("/api/data");
       const cloudData = payload.data || {};
@@ -189,6 +192,7 @@
       });
       await load("app.js");
     } catch (e) {
+      appStarting = false;
       error(e.message || "Gagal mengambil data cloud.");
       root.style.display = "grid";
     }
