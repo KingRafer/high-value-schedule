@@ -888,7 +888,7 @@ function renderTasks() {
 
   if (empty) empty.hidden = filtered.length > 0;
   list.querySelectorAll('.task-item').forEach(item => {
-    item.addEventListener('click', e => {
+    item.addEventListener('click', async e => {
       const action = e.target.closest('[data-action]')?.dataset.action;
       const id = item.dataset.id;
       if (action === 'toggle') toggleTask(id);
