@@ -53,8 +53,24 @@
   async function startApp(user) {
     try {
       const payload = await request("/api/data");
+      const cloudData = payload.data || {};
+      const localData = Object.fromEntries(
+        Object.keys(localStorage).filter(key => key.startsWith("hvos_")).map(key => {
+          try { return [key, JSON.parse(localStorage.getItem(key))]; }
+          catch { return [key, localStorage.getItem(key)]; }
+        })
+      );
+      if (Object.keys(cloudData).length === 0 && Object.keys(localData).length > 0) {
+        const importLocal = confirm("Akun cloud ini belum memiliki data. Impor data HVOS yang tersimpan di browser ini ke akun Anda?");
+        if (importLocal) {
+          for (const [key, value] of Object.entries(localData)) {
+            await request("/api/data", { method: "PUT", body: JSON.stringify({ key, value }) });
+          }
+        }
+      }
+      const finalData = Object.keys(cloudData).length ? cloudData : localData;
       Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => localStorage.removeItem(key));
-      Object.entries(payload.data || {}).forEach(([key, value]) => localStorage.setItem(key, JSON.stringify(value)));
+      Object.entries(finalData).forEach(([key, value]) => localStorage.setItem(key, JSON.stringify(value)));
       root.remove();
       const status = document.createElement("span");
       status.id = "hvos-cloud-status";
@@ -76,7 +92,7 @@
         if (!key || !key.startsWith("hvos_")) return;
         queue = queue.then(() => fetch("/api/data", {
           method, credentials: "same-origin", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(method === "PUT" ? { key, value: JSON.parse(value) } : { key })
+          body: JSON.stringify(method === "PUT" ? { key, value: (() => { try { return JSON.parse(value); } catch { return value; } })() } : { key })
         })).then(async r => { if (!r.ok) throw new Error("Cloud sync gagal"); })
           .catch(e => { console.warn("HVOS cloud sync:", e); status.textContent = "Sync tertunda"; });
       };
@@ -88,6 +104,7 @@
         originalRemove.call(this, key);
         if (this === localStorage && String(key).startsWith("hvos_")) sync("DELETE", String(key));
       };
+      if (window.HVOS_CONTENT_READY) await window.HVOS_CONTENT_READY;
       const load = src => new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.src = src; script.onload = resolve; script.onerror = () => reject(new Error("Gagal memuat " + src));
