@@ -1,7 +1,7 @@
 (() => {
   const root = document.createElement("div");
   root.id = "hvos-auth-root";
-  root.innerHTML = \`
+  root.innerHTML = `
     <style>
       #hvos-auth-root{position:fixed;inset:0;z-index:99999;background:#0b1020;color:#f4f6fb;display:grid;place-items:center;padding:20px;font-family:Inter,system-ui,sans-serif}
       #hvos-auth-root *{box-sizing:border-box}
@@ -27,7 +27,7 @@
       </form>
       <button class="hvos-auth-switch" id="hvos-auth-switch" type="button">Belum punya akun? Daftar</button>
       <p class="hvos-auth-foot">Gunakan password unik. HVOS tidak akan pernah meminta password melalui pesan atau chat.</p>
-    </section>\`;
+    </section>`;
   document.body.appendChild(root);
 
   let mode = "login";
