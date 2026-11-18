@@ -839,8 +839,10 @@ document.getElementById('form-block')?.addEventListener('submit', e => {
     end: document.getElementById('block-end').value,
     recur: document.getElementById('block-recur').value,
   };
-  if (!data.title.trim()) { document.getElementById('task-title').setCustomValidity('Judul task wajib diisi.'); document.getElementById('task-title').reportValidity(); return; }
-  document.getElementById('task-title').setCustomValidity('');
+  if (!data.title.trim()) { document.getElementById('block-title').setCustomValidity('Judul jadwal wajib diisi.'); document.getElementById('block-title').reportValidity(); return; }
+  document.getElementById('block-title').setCustomValidity('');
+  if (!data.date) { document.getElementById('block-date').reportValidity(); return; }
+  if (!data.start || !data.end) { document.getElementById('block-start').reportValidity(); return; }
   if (id) {
     const b = blocks.find(x => x.id === id);
     if (b) Object.assign(b, data);
@@ -949,7 +951,8 @@ document.getElementById('form-task')?.addEventListener('submit', e => {
     goalId: document.getElementById('task-goal')?.value || '',
     habitId: document.getElementById('task-habit')?.value || '',
   };
-  if (!data.title) return;
+  if (!data.title.trim()) { document.getElementById('task-title').setCustomValidity('Judul task wajib diisi.'); document.getElementById('task-title').reportValidity(); return; }
+  document.getElementById('task-title').setCustomValidity('');
   if (id) {
     const t = tasks.find(x => x.id === id);
     if (t) Object.assign(t, data);
