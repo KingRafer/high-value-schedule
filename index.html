@@ -410,12 +410,20 @@
   </div>
   <div class="modal-overlay" id="modal-overlay" hidden></div>
   <script>
-  window.HVOS_CONTENT_READY = Promise.resolve().then(() => {
-    const main = document.getElementById('main-content');
-    const sections = document.getElementById('extra-sections');
-    const modals = document.getElementById('extra-modals');
-    if (main && sections) main.insertAdjacentHTML('beforeend', sections.innerHTML);
-    if (modals) document.getElementById('modal-overlay')?.insertAdjacentHTML('beforeend', modals.innerHTML);
+  window.HVOS_CONTENT_READY = new Promise(resolve => {
+    const insertContent = () => {
+      const main = document.getElementById('main-content');
+      const sections = document.getElementById('extra-sections');
+      const modals = document.getElementById('extra-modals');
+      if (main && sections) main.insertAdjacentHTML('beforeend', sections.innerHTML);
+      if (modals) document.getElementById('modal-overlay')?.insertAdjacentHTML('beforeend', modals.innerHTML);
+      resolve();
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', insertContent, { once: true });
+    } else {
+      insertContent();
+    }
   });
   </script>
   <template id="extra-sections">
@@ -619,6 +627,172 @@
         <div class="form-group"><label>Kategori</label><input type="text" id="tx-category" /></div>
         <div class="form-group"><label>Catatan</label><input type="text" id="tx-note" /></div>
         <div class="modal-actions"><button type="button" class="btn btn-outline" data-close>Batal</button><button type="submit" class="btn btn-primary">Simpan</button></div>
+      </form>
+    </div>
+  
+
+    <!-- Task -->
+    <div class="modal" id="modal-task" hidden>
+      <div class="modal-header"><h3 id="modal-task-title">Tambah Task</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-task">
+        <input type="hidden" id="task-id" />
+        <div class="form-group"><label>Judul</label><input type="text" id="task-title" required placeholder="Apa yang harus dikerjakan?" /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Kategori</label>
+            <select id="task-category">
+              <option value="focus">Focus / Work</option>
+              <option value="body">Body / Training</option>
+              <option value="mind">Mind</option>
+              <option value="rest">Rest / Social</option>
+              <option value="other">Lainnya</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Prioritas</label>
+            <select id="task-priority">
+              <option value="0">Normal</option>
+              <option value="1">Prioritas</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Catatan</label><textarea id="task-notes" rows="2"></textarea></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Habit -->
+    <div class="modal" id="modal-habit" hidden>
+      <div class="modal-header"><h3 id="modal-habit-title">Tambah Habit</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-habit">
+        <input type="hidden" id="habit-id" />
+        <div class="form-group"><label>Nama Habit</label><input type="text" id="habit-name" required placeholder="Contoh: Baca 20 halaman" /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Kategori</label>
+            <select id="habit-category">
+              <option value="discipline">Discipline</option>
+              <option value="health">Health</option>
+              <option value="mind">Mind</option>
+              <option value="work">Work</option>
+              <option value="other">Lainnya</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Target / minggu</label>
+            <input type="number" id="habit-target" min="1" max="7" value="7" />
+          </div>
+        </div>
+        <div class="form-group"><label>Icon (emoji)</label><input type="text" id="habit-icon" maxlength="2" placeholder="🔥" /></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Time Block / Event -->
+    <div class="modal" id="modal-block" hidden>
+      <div class="modal-header"><h3 id="modal-block-title">Time Block</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-block">
+        <input type="hidden" id="block-id" />
+        <div class="form-group"><label>Judul</label><input type="text" id="block-title" required /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Tanggal</label><input type="date" id="block-date" required /></div>
+          <div class="form-group"><label>Tipe</label>
+            <select id="block-type">
+              <option value="focus">Focus</option>
+              <option value="meeting">Meeting</option>
+              <option value="workout">Workout</option>
+              <option value="personal">Personal</option>
+              <option value="routine">Routine</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Mulai</label><input type="time" id="block-start" required /></div>
+          <div class="form-group"><label>Selesai</label><input type="time" id="block-end" required /></div>
+        </div>
+        <div class="form-group"><label>Recurring</label>
+          <select id="block-recur">
+            <option value="none">Tidak</option>
+            <option value="daily">Setiap Hari</option>
+            <option value="weekdays">Hari Kerja</option>
+            <option value="weekly">Mingguan</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Trade -->
+    <div class="modal" id="modal-trade" hidden>
+      <div class="modal-header"><h3 id="modal-trade-title">Catat Trade</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-trade">
+        <input type="hidden" id="trade-id" />
+        <div class="form-row">
+          <div class="form-group"><label>Tanggal</label><input type="date" id="trade-date" required /></div>
+          <div class="form-group"><label>Pair</label><input type="text" id="trade-pair" required placeholder="XAUUSD, EURUSD..." /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Arah</label>
+            <select id="trade-side"><option value="long">Long</option><option value="short">Short</option></select>
+          </div>
+          <div class="form-group"><label>P/L (Rp)</label><input type="number" id="trade-pnl" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Entry</label><input type="text" id="trade-entry" /></div>
+          <div class="form-group"><label>Exit</label><input type="text" id="trade-exit" /></div>
+        </div>
+        <div class="form-group"><label>Catatan</label><textarea id="trade-notes" rows="2"></textarea></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Goal -->
+    <div class="modal" id="modal-goal" hidden>
+      <div class="modal-header"><h3 id="modal-goal-title">Tambah Impian</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-goal">
+        <input type="hidden" id="goal-id" />
+        <div class="form-group"><label>Judul</label><input type="text" id="goal-title" required /></div>
+        <div class="form-group"><label>Deskripsi</label><textarea id="goal-desc" rows="3"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Target Tahun</label><input type="number" id="goal-year" min="2024" max="2050" /></div>
+          <div class="form-group"><label>Progress %</label><input type="number" id="goal-progress" min="0" max="100" value="0" /></div>
+        </div>
+        <div class="form-group"><label>Kategori</label>
+          <select id="goal-category">
+            <option value="finance">Keuangan</option>
+            <option value="business">Bisnis</option>
+            <option value="health">Kesehatan</option>
+            <option value="relationship">Hubungan</option>
+            <option value="skill">Skill</option>
+            <option value="lifestyle">Lifestyle</option>
+            <option value="other">Lainnya</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Challenge -->
+    <div class="modal" id="modal-challenge" hidden>
+      <div class="modal-header"><h3>Habit Challenge</h3><button class="modal-close" data-close>&times;</button></div>
+      <form id="form-challenge">
+        <div class="form-group"><label>Nama Challenge</label><input type="text" id="challenge-name" required placeholder="30 hari no porn / cold shower..." /></div>
+        <div class="form-group"><label>Durasi (hari)</label><input type="number" id="challenge-days" min="1" max="365" value="30" /></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Mulai Challenge</button>
+        </div>
       </form>
     </div>
   </template>
