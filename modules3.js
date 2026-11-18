@@ -117,11 +117,11 @@
     }
     el.innerHTML = items.map(rowFn).join('');
     el.querySelectorAll('.data-row').forEach(row => {
-      row.addEventListener('click', e => {
+      row.addEventListener('click', async e => {
         const act = e.target.closest('[data-act]')?.dataset.act;
         const id = row.dataset.id;
         if (!act) return;
-        if (act === 'del') { if (confirm('Hapus?')) onDel(id); }
+        if (act === 'del') { if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus item ini?') : confirm('Hapus?')) onDel(id); }
         else if (onExtra) onExtra(id, act);
       });
     });
