@@ -1,4 +1,4 @@
-/* HVOS app loader — base from last good commit + module hooks */
+/* HVOS app loader — base + all module hooks */
 (async function () {
   const BASE = 'https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/app.js';
   try {
@@ -16,6 +16,9 @@
       "  if (id === 'social' && window.HVOSModules) window.HVOSModules.renderSocial();\n" +
       "  if (id === 'leadership' && window.HVOSModules) window.HVOSModules.renderLeadership();\n" +
       "  if (id === 'spiritual' && window.HVOSModules) window.HVOSModules.renderSpiritual();\n" +
+      "  if (id === 'strategic' && window.HVOSModules) window.HVOSModules.renderStrategic();\n" +
+      "  if (id === 'entrepreneur' && window.HVOSModules) window.HVOSModules.renderEntrepreneur();\n" +
+      "  if (id === 'lifestyle' && window.HVOSModules) window.HVOSModules.renderLifestyle();\n" +
       "}"
     );
     const s = document.createElement('script');
