@@ -147,7 +147,7 @@
         script.src = src; script.onload = resolve; script.onerror = () => reject(new Error("Gagal memuat " + src));
         document.body.appendChild(script);
       });
-      for (const src of ["modules.js","modules2.js","modules3.js","modules4.js","app.js"]) await load(src);
+      await load("app.js");
     } catch (e) {
       error(e.message || "Gagal mengambil data cloud.");
       root.style.display = "grid";
