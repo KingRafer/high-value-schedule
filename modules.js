@@ -28,7 +28,7 @@
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
   function load(k, fb) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch { return fb; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
-  function todayStr() { return new Date().toISOString().slice(0, 10); }
+  function todayStr() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function formatRp(n) {
     const num = Number(n) || 0;
     return (num < 0 ? '-Rp ' : 'Rp ') + new Intl.NumberFormat('id-ID').format(Math.abs(num));
