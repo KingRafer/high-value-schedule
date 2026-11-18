@@ -130,6 +130,7 @@
           await flushAll();
           await request("/api/auth/logout", { method: "POST", body: "{}" });
           Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => originalRemove.call(localStorage, key));
+          originalRemove.call(localStorage, QUEUE_KEY);
           location.reload();
         }
         catch (e) { logout.disabled = false; alert(e.message); }
@@ -138,7 +139,7 @@
       const originalSet = Storage.prototype.setItem;
       const originalRemove = Storage.prototype.removeItem;
       const pendingChanges = new Map();
-      const QUEUE_KEY = "__hvos_pending_sync__";
+      const QUEUE_KEY = "__hvos_pending_sync__:" + user.id;
       const persistQueue = () => {
         try { originalSet.call(localStorage, QUEUE_KEY, JSON.stringify(Array.from(pendingChanges.values()))); } catch (e) { console.warn("HVOS queue persistence:", e); }
         status.textContent = pendingChanges.size ? "Sync antre " + pendingChanges.size : (navigator.onLine ? "Cloud sync aktif" : "Offline");
