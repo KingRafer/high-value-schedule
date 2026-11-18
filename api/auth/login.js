@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { getDb } from "../_lib/db.js";
-import { createSession } from "../_lib/auth.js";
+import { getDb } from "../../lib/db.js";
+import { createSession } from "../../lib/auth.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method tidak diizinkan." });
