@@ -93,7 +93,7 @@
     renderGrooming,
     renderFinance,
     openWorkoutModal,
-    openNutritionModal,
+
   };
 
   // ========== PHYSICAL ==========
