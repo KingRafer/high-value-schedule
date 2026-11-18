@@ -124,22 +124,52 @@
       document.querySelector(".topbar-actions")?.appendChild(logout);
       const originalSet = Storage.prototype.setItem;
       const originalRemove = Storage.prototype.removeItem;
-      let queue = Promise.resolve();
-      const sync = (method, key, value) => {
+      const pendingChanges = new Map();
+      let syncTimer = null;
+      let syncInFlight = false;
+      const scheduleSync = () => {
+        if (syncTimer) clearTimeout(syncTimer);
+        syncTimer = setTimeout(flushSync, 450);
+      };
+      async function flushSync() {
+        if (syncInFlight || pendingChanges.size === 0) return;
+        syncInFlight = true;
+        syncTimer = null;
+        const batch = Array.from(pendingChanges.values()).slice(0, 100);
+        batch.forEach(item => pendingChanges.delete(item.key));
+        try {
+          const response = await fetch("/api/data", {
+            method: "POST", credentials: "same-origin",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: batch })
+          });
+          if (!response.ok) throw new Error("Cloud sync gagal (" + response.status + ")");
+          status.textContent = "Cloud sync aktif";
+        } catch (e) {
+          console.warn("HVOS cloud sync:", e);
+          batch.forEach(item => { if (!pendingChanges.has(item.key)) pendingChanges.set(item.key, item); });
+          status.textContent = "Sync tertunda";
+        } finally {
+          syncInFlight = false;
+          if (pendingChanges.size && status.textContent !== "Sync tertunda") scheduleSync();
+        }
+      }
+      const queueChange = (method, key, rawValue) => {
         if (!key || !key.startsWith("hvos_")) return;
-        queue = queue.then(() => fetch("/api/data", {
-          method, credentials: "same-origin", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(method === "PUT" ? { key, value: (() => { try { return JSON.parse(value); } catch { return value; } })() } : { key })
-        })).then(async r => { if (!r.ok) throw new Error("Cloud sync gagal"); })
-          .catch(e => { console.warn("HVOS cloud sync:", e); status.textContent = "Sync tertunda"; });
+        let value;
+        if (method === "PUT") {
+          try { value = JSON.parse(rawValue); } catch { value = rawValue; }
+        }
+        pendingChanges.set(key, method === "PUT" ? { method, key, value } : { method, key });
+        scheduleSync();
       };
       Storage.prototype.setItem = function(key, value) {
         originalSet.call(this, key, value);
-        if (this === localStorage && String(key).startsWith("hvos_")) sync("PUT", String(key), String(value));
+        if (this === localStorage) queueChange("PUT", String(key), String(value));
       };
       Storage.prototype.removeItem = function(key) {
         originalRemove.call(this, key);
-        if (this === localStorage && String(key).startsWith("hvos_")) sync("DELETE", String(key));
+        if (this === localStorage) queueChange("DELETE", String(key));
       };
       if (window.HVOS_CONTENT_READY) await window.HVOS_CONTENT_READY;
       const load = src => new Promise((resolve, reject) => {
