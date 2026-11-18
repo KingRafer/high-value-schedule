@@ -893,7 +893,7 @@ function renderTasks() {
       const id = item.dataset.id;
       if (action === 'toggle') toggleTask(id);
       if (action === 'edit') openTaskModal(id);
-      if (action === 'delete') { if (confirm('Hapus?')) { tasks = tasks.filter(t => t.id !== id); saveTasks(); } }
+      if (action === 'delete') { if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus task ini?') : confirm('Hapus?')) { tasks = tasks.filter(t => t.id !== id); saveTasks(); } }
     });
   });
 }
@@ -919,6 +919,11 @@ function openTaskModal(id = null) {
       document.getElementById('task-category').value = t.category || 'focus';
       document.getElementById('task-priority').value = t.priority ? '1' : '0';
       document.getElementById('task-notes').value = t.notes || '';
+      if (document.getElementById('task-due-date')) document.getElementById('task-due-date').value = t.dueDate || '';
+      if (document.getElementById('task-repeat')) document.getElementById('task-repeat').value = t.repeat || 'none';
+      if (document.getElementById('task-subtasks')) document.getElementById('task-subtasks').value = (t.subtasks || []).map(s => typeof s === 'string' ? s : s.title).join('\n');
+      if (document.getElementById('task-goal')) document.getElementById('task-goal').value = t.goalId || '';
+      if (document.getElementById('task-habit')) document.getElementById('task-habit').value = t.habitId || '';
     }
   }
   openModal('modal-task');
@@ -936,6 +941,11 @@ document.getElementById('form-task')?.addEventListener('submit', e => {
     category: document.getElementById('task-category').value,
     priority: document.getElementById('task-priority').value === '1',
     notes: document.getElementById('task-notes').value.trim(),
+    dueDate: document.getElementById('task-due-date')?.value || '',
+    repeat: document.getElementById('task-repeat')?.value || 'none',
+    subtasks: (document.getElementById('task-subtasks')?.value || '').split('\n').map(s => s.trim()).filter(Boolean).map(title => ({ id: uid(), title, done: false })),
+    goalId: document.getElementById('task-goal')?.value || '',
+    habitId: document.getElementById('task-habit')?.value || '',
   };
   if (!data.title) return;
   if (id) {
