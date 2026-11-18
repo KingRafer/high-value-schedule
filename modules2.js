@@ -411,7 +411,7 @@
       milestones.push({ id: uid(), title, date: todayStr(), done: false });
       save(K.milestones, milestones); renderCareer();
     });
-    bind('btn-add-work-priority', () => {
+    bind('btn-add-work-prio', () => {
       const title = prompt('Work priority hari ini:');
       if (!title) return;
       workPriorities.push({ id: uid(), title, date: todayStr(), done: false });
