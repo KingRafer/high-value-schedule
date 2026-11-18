@@ -1,0 +1,18 @@
+{
+  "name": "High Value OS",
+  "short_name": "HVOS",
+  "description": "Personal productivity workspace",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
