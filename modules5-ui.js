@@ -80,7 +80,7 @@
     <div class="panel"><div class="panel-header"><h2>Travel Goals</h2><button class="btn btn-sm btn-outline" id="btn-add-travel-goal">+</button></div><div id="travel-goals-list"></div></div>
     <div class="panel"><div class="panel-header"><h2>Adventure Planner</h2><button class="btn btn-sm btn-outline" id="btn-add-adventure">+</button></div><div id="adventure-list"></div></div>
     <div class="panel"><div class="panel-header"><h2>New Experiences</h2><button class="btn btn-sm btn-outline" id="btn-add-experience">+</button></div><div id="experience-list"></div></div>
-    <div class="panel"><div class="panel-header"><h2>Personal Challenges</h2><button class="btn btn-sm btn-outline" id="btn-add-challenge">+</button></div><div id="challenge-list"></div></div>
+    <div class="panel"><div class="panel-header"><h2>Personal Challenges</h2><button class="btn btn-sm btn-outline" id="btn-add-adv-challenge">+</button></div><div id="challenge-list"></div></div>
     <div class="panel"><div class="panel-header"><h2>Outdoor Activities</h2><button class="btn btn-sm btn-outline" id="btn-add-outdoor">+</button></div><div id="outdoor-list"></div></div>
     <div class="panel"><div class="panel-header"><h2>Hobbies</h2><button class="btn btn-sm btn-outline" id="btn-add-hobby">+</button></div><div id="hobby-list"></div></div>
     <div class="panel"><div class="panel-header"><h2>Cultural Exploration</h2><button class="btn btn-sm btn-outline" id="btn-add-cultural">+</button></div><div id="cultural-list"></div></div>
