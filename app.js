@@ -1,5 +1,11 @@
 /* HVOS app loader — base + all module hooks */
 (async function () {
+  // Ensure modules4 UI injector is present
+  if (!document.querySelector('script[src="modules4-ui.js"]')) {
+    const u = document.createElement('script');
+    u.src = 'modules4-ui.js';
+    document.head.appendChild(u);
+  }
   const BASE = 'https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/app.js';
   try {
     const res = await fetch(BASE);
