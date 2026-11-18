@@ -1,55 +1,46 @@
 # High Value OS (HVOS)
 
-Personal operating system untuk **pria high value**.
+Personal OS untuk **pria high value**.
 
-**Repo:** https://github.com/KingRafer/high-value-schedule  
-Buka `index.html` atau aktifkan GitHub Pages.
+**Repo:** https://github.com/KingRafer/high-value-schedule
 
----
+## Modules
 
-## 1. Main Dashboard
-- Personalized greeting (pagi/siang/sore/malam)
-- **Daily Performance Score** (0–100) dari habits + tasks + routines
-- Today's priorities & checklist
-- Habit completion hari ini
-- Today's schedule snapshot
-- Weekly progress bars
-- Monthly statistics (tasks, habit check-ins, pomodoros, discipline rate)
-- Quick actions
+### Core
+1. **Dashboard** — performance score, priorities, habits, weekly/monthly stats
+2. **Schedule** — day/week/month, time blocking, routines
+3. **Discipline** — habit tracker, streaks, challenges, morning/night checklist
+4. **Tasks** — custom checklist + priorities
+5. **Trading** — journal, P/L, target profit
+6. **Impian** — long-term goals
+7. **Focus Timer** — Pomodoro + deep work
 
-## 2. Schedule & Time Management
-- **Day view** — time blocks per jam
-- **Week view** — overview 7 hari
-- **Month calendar** — klik tanggal untuk buka hari itu
-- Time blocking (Focus / Meeting / Workout / Personal / Routine)
-- Recurring: daily, weekdays, weekly
-- **Morning & Evening routines** (bisa diedit)
-- Workout days selector
-- Default work blocks reference
+### New
+8. **Physical Excellence**
+   - Workout log (sets/reps/weight)
+   - Exercise library
+   - Body weight & measurements
+   - Nutrition (calories, protein, water)
+   - Sleep & recovery tracker
+   - Transformation progress notes / photo URLs
 
-## 3. Discipline & Habit System
-- Daily habit tracker + checkbox
-- **Streak counter** per habit + best streak
-- Morning checklist & Night checklist
-- Consistency chart 7 hari
-- Custom habits (tambah/edit/hapus)
-- Habit challenges (30-day dll)
-- Discipline rate
+9. **Grooming & Appearance**
+   - Skincare / haircare / hygiene checklists
+   - Haircut & grooming reminders
+   - Fragrance collection
+   - Wardrobe + outfit planner
+   - Appearance goals
 
-## 4. Lainnya (tetap ada)
-- **Tasks** — custom, prioritas, kategori, checklist
-- **Trading Journal** — P/L, win rate, target profit harian
-- **Impian / Goals** — progress %, target tahun
-- **Focus Timer** — Pomodoro 25/5/15 + Deep Work 50/90, sesi tercatat
-
----
-
-## Data
-Semua disimpan di **localStorage** browser. Tidak hilang selama tidak clear data.
+10. **Financial & Wealth**
+    - Income / expense tracker
+    - Budget by category
+    - Emergency fund
+    - Debt & asset tracker
+    - Net worth
+    - Financial goals
+    - Monthly spending analytics
 
 ## Tech
-Pure HTML + CSS + Vanilla JS. Tidak perlu build.
+Pure HTML/CSS/JS + localStorage. No build step.
 
----
-
-**Built for men who take ownership of their time, habits, and goals.**
+Buka `index.html` atau aktifkan GitHub Pages.
