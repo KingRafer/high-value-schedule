@@ -13,6 +13,9 @@
       "  if (id === 'career' && window.HVOSModules) window.HVOSModules.renderCareer();\n" +
       "  if (id === 'intellect' && window.HVOSModules) window.HVOSModules.renderIntellect();\n" +
       "  if (id === 'mental' && window.HVOSModules) window.HVOSModules.renderMental();\n" +
+      "  if (id === 'social' && window.HVOSModules) window.HVOSModules.renderSocial();\n" +
+      "  if (id === 'leadership' && window.HVOSModules) window.HVOSModules.renderLeadership();\n" +
+      "  if (id === 'spiritual' && window.HVOSModules) window.HVOSModules.renderSpiritual();\n" +
       "}"
     );
     const s = document.createElement('script');
