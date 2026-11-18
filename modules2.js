@@ -399,10 +399,15 @@
       ideas.push({ id: uid(), title, notes: prompt('Detail:') || '' });
       save(K.ideas, ideas); renderCareer();
     });
-    bind('btn-add-revenue', () => {
-      const amount = Number(prompt('Revenue amount (Rp):'));
-      if (!amount) return;
-      revenue.push({ id: uid(), amount, date: todayStr(), source: prompt('Source:') || '' });
+    bind('btn-add-revenue', async () => {
+      const values = await window.HVOSDialogs?.form('Tambah Pendapatan', [
+        { name: 'amount', label: 'Nominal (Rp)', type: 'number', min: 0, required: true },
+        { name: 'source', label: 'Sumber pendapatan', required: true }
+      ]);
+      if (!values) return;
+      const amount = Number(values.amount);
+      if (!Number.isFinite(amount) || amount <= 0 || !values.source.trim()) return;
+      revenue.push({ id: uid(), amount, date: todayStr(), source: values.source.trim() });
       save(K.revenue, revenue); renderCareer();
     });
     bind('btn-add-milestone', () => {
@@ -411,10 +416,12 @@
       milestones.push({ id: uid(), title, date: todayStr(), done: false });
       save(K.milestones, milestones); renderCareer();
     });
-    bind('btn-add-work-prio', () => {
-      const title = prompt('Work priority hari ini:');
-      if (!title) return;
-      workPriorities.push({ id: uid(), title, date: todayStr(), done: false });
+    bind('btn-add-work-prio', async () => {
+      const values = await window.HVOSDialogs?.form('Work Priority', [
+        { name: 'title', label: 'Prioritas kerja', required: true }
+      ]);
+      if (!values || !values.title.trim()) return;
+      workPriorities.push({ id: uid(), title: values.title.trim(), date: todayStr(), done: false });
       save(K.workPriorities, workPriorities); renderCareer();
     });
 
