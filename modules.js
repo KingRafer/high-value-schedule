@@ -272,13 +272,16 @@
       renderPhysical();
     });
 
-    document.getElementById('btn-log-nutrition')?.addEventListener('click', () => {
+    document.getElementById('btn-log-nutrition')?.addEventListener('click', async () => {
       const today = todayStr();
       const cur = nutrition[today] || { cal: 0, protein: 0, water: 0 };
-      const cal = prompt('Kalori hari ini:', cur.cal) || cur.cal;
-      const protein = prompt('Protein (gram):', cur.protein) || cur.protein;
-      const water = prompt('Air (ml):', cur.water) || cur.water;
-      nutrition[today] = { cal: Number(cal) || 0, protein: Number(protein) || 0, water: Number(water) || 0 };
+      const values = await window.HVOSDialogs?.form('Catat Nutrisi', [
+        { name: 'cal', label: 'Kalori', type: 'number', min: 0, value: cur.cal },
+        { name: 'protein', label: 'Protein (gram)', type: 'number', min: 0, value: cur.protein },
+        { name: 'water', label: 'Air (ml)', type: 'number', min: 0, value: cur.water }
+      ]);
+      if (!values) return;
+      nutrition[today] = { cal: Number(values.cal), protein: Number(values.protein), water: Number(values.water) };
       save(K.nutrition, nutrition);
       renderPhysical();
     });
@@ -403,10 +406,13 @@
       save(K.finGoals, finGoals);
       renderFinance();
     });
-    document.getElementById('btn-set-emergency')?.addEventListener('click', () => {
-      const current = Number(prompt('Emergency fund sekarang (Rp):', emergencyFund.current)) || 0;
-      const target = Number(prompt('Target emergency fund (Rp):', emergencyFund.target)) || 0;
-      emergencyFund = { current, target };
+    document.getElementById('btn-set-emergency')?.addEventListener('click', async () => {
+      const values = await window.HVOSDialogs?.form('Dana Darurat', [
+        { name: 'current', label: 'Dana terkumpul (Rp)', type: 'number', min: 0, value: emergencyFund.current },
+        { name: 'target', label: 'Target (Rp)', type: 'number', min: 0, value: emergencyFund.target }
+      ]);
+      if (!values) return;
+      emergencyFund = { current: Number(values.current), target: Number(values.target) };
       save(K.emergencyFund, emergencyFund);
       renderFinance();
     });
