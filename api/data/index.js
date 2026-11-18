@@ -1,5 +1,5 @@
-import { getDb } from "../_lib/db.js";
-import { requireUser } from "../_lib/auth.js";
+import { getDb } from "../../lib/db.js";
+import { requireUser } from "../../lib/auth.js";
 
 const allowedKey = key => typeof key === "string" && /^hvos_[a-zA-Z0-9_-]{1,100}$/.test(key);
 export default async function handler(req, res) {
