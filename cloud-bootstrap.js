@@ -127,6 +127,7 @@
       logout.addEventListener("click", async () => {
         logout.disabled = true;
         try {
+          await flushAll();
           await request("/api/auth/logout", { method: "POST", body: "{}" });
           Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => originalRemove.call(localStorage, key));
           location.reload();
@@ -167,6 +168,39 @@
           if (pendingChanges.size && !syncTimer) scheduleSync();
         }
       }
+      async function flushAll() {
+        if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+        while (syncInFlight) await new Promise(resolve => setTimeout(resolve, 40));
+        while (pendingChanges.size) {
+          await flushSync();
+          if (syncInFlight) {
+            while (syncInFlight) await new Promise(resolve => setTimeout(resolve, 40));
+          } else if (pendingChanges.size) {
+            throw new Error("Perubahan belum berhasil disinkronkan. Coba Keluar lagi setelah koneksi stabil.");
+          }
+        }
+      }
+
+      window.addEventListener("pagehide", () => {
+        if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+        if (!pendingChanges.size) return;
+        const batch = Array.from(pendingChanges.values()).slice(0, 100);
+        batch.forEach(item => pendingChanges.delete(item.key));
+        try {
+          fetch("/api/data", {
+            method: "POST",
+            credentials: "same-origin",
+            keepalive: true,
+            headers: { "Content-Type": "application/json", "Cache-Control": "no-cache" },
+            body: JSON.stringify({ items: batch })
+          }).then(response => {
+            if (!response.ok) console.warn("HVOS pagehide sync gagal:", response.status);
+          }).catch(error => console.warn("HVOS pagehide sync:", error));
+        } catch (error) {
+          console.warn("HVOS pagehide sync:", error);
+        }
+      });
+
       const queueChange = (method, key, rawValue) => {
         if (!key || !key.startsWith("hvos_")) return;
         let value;
