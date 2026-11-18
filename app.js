@@ -1,11 +1,15 @@
 /* HVOS app loader — base + all module hooks */
 (async function () {
-  // Ensure modules4 UI injector is present
-  if (!document.querySelector('script[src="modules4-ui.js"]')) {
-    const u = document.createElement('script');
-    u.src = 'modules4-ui.js';
-    document.head.appendChild(u);
+  function loadScript(src) {
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    const s = document.createElement('script');
+    s.src = src;
+    document.head.appendChild(s);
   }
+  loadScript('modules4-ui.js');
+  loadScript('modules5.js');
+  loadScript('modules5-ui.js');
+
   const BASE = 'https://cdn.jsdelivr.net/gh/KingRafer/high-value-schedule@4901078a95734cfe51520a9cbad504c280225c95/app.js';
   try {
     const res = await fetch(BASE);
@@ -25,6 +29,11 @@
       "  if (id === 'strategic' && window.HVOSModules) window.HVOSModules.renderStrategic();\n" +
       "  if (id === 'entrepreneur' && window.HVOSModules) window.HVOSModules.renderEntrepreneur();\n" +
       "  if (id === 'lifestyle' && window.HVOSModules) window.HVOSModules.renderLifestyle();\n" +
+      "  if (id === 'digital' && window.HVOSModules) window.HVOSModules.renderDigital();\n" +
+      "  if (id === 'brand' && window.HVOSModules) window.HVOSModules.renderBrand();\n" +
+      "  if (id === 'adventure' && window.HVOSModules) window.HVOSModules.renderAdventure();\n" +
+      "  if (id === 'security' && window.HVOSModules) window.HVOSModules.renderSecurity();\n" +
+      "  if (id === 'legacy' && window.HVOSModules) window.HVOSModules.renderLegacy();\n" +
       "}"
     );
     const s = document.createElement('script');
