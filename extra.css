@@ -321,3 +321,14 @@ button, .btn, .nav-item { touch-action: manipulation; }
   .global-search-wrap:focus-within {width:min(155px,43vw)}
   .global-search-wrap input::placeholder {color:transparent}
 }
+
+/* HVOS responsive workspace additions */
+@media (max-width: 700px) {
+  .table-wrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trade-table { min-width: 680px; }
+  .trading-summary { min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modal { max-height: 90vh; overflow-y: auto; }
+  .modal form { max-height: calc(90vh - 64px); overflow-y: auto; }
+  .modal-actions { position: sticky; bottom: 0; background: var(--bg-card); padding-top: .75rem; }
+  #hvos-module-options, #hvos-widget-options { grid-template-columns: 1fr 1fr; }
+}
