@@ -124,9 +124,9 @@
         </div>`).join('') : '<p class="empty-hint">Belum ada workout. Catat sesi gym pertama.</p>';
 
       wEl.querySelectorAll('[data-act="del-wo"]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const id = btn.closest('.data-row').dataset.id;
-          if (confirm('Hapus workout?')) {
+          if (window.HVOSDialogs ? await window.HVOSDialogs.confirm('Hapus workout?') : confirm('Hapus workout?')) {
             workouts = workouts.filter(w => w.id !== id);
             save(K.workouts, workouts);
             renderPhysical();
