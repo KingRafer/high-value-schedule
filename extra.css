@@ -221,3 +221,64 @@ button, .btn, .nav-item { touch-action: manipulation; }
   .stats-row.four > .stat-card { min-width:100%; }
   .quick-actions { grid-template-columns:1fr; }
 }
+
+
+/* HVOS dashboard presentation — clearer hierarchy and data readability */
+#dashboard { animation: hvos-section-in .32s ease both; }
+@keyframes hvos-section-in {
+  from { opacity:0; transform:translateY(7px); }
+  to { opacity:1; transform:translateY(0); }
+}
+#dashboard .dash-hero {
+  position:relative;
+  overflow:hidden;
+  min-height:150px;
+  align-items:center;
+}
+#dashboard .dash-hero::after {
+  content:"";
+  position:absolute;
+  width:220px;height:220px;
+  right:5%;top:-125px;
+  border:1px solid rgba(159,190,255,.13);
+  border-radius:50%;
+  box-shadow:0 0 0 22px rgba(159,190,255,.025),0 0 0 48px rgba(159,190,255,.018);
+  pointer-events:none;
+}
+#dashboard .dash-hero > * { position:relative;z-index:1; }
+#dashboard .score-ring { filter:drop-shadow(0 5px 18px rgba(105,153,245,.16)); }
+#dashboard .score-value { color:#e5efff; }
+#dashboard .dash-grid { align-items:stretch; }
+#dashboard .dash-grid > .panel { min-height:190px; }
+#dashboard .panel-header h2 { display:flex;align-items:center;gap:.5rem; }
+#dashboard .mini-list { gap:.55rem; }
+#dashboard .mini-item {
+  min-height:42px;
+  padding:.65rem .75rem;
+  border:1px solid rgba(47,70,103,.55);
+  transition:background .18s,border-color .18s,transform .18s;
+}
+#dashboard .mini-item:hover { background:#13233a;border-color:#3b587e;transform:translateX(2px); }
+#dashboard .mini-check { width:19px;height:19px;border-radius:6px; }
+#dashboard .week-bars { height:105px;gap:.6rem;padding:0 .25rem; }
+#dashboard .week-bar { border-radius:7px 7px 2px 2px;min-height:5px; }
+#dashboard .week-bar.filled { box-shadow:0 0 14px rgba(145,180,255,.18); }
+#dashboard .week-bar-label { font-size:.68rem;font-weight:600; }
+#dashboard .quick-actions { grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); }
+#dashboard .qa-btn { min-height:54px;display:flex;align-items:center;gap:.65rem; }
+#dashboard .qa-btn:active { transform:scale(.985); }
+#dashboard .month-stats > div { padding:.85rem .5rem;border:1px solid #263a56;border-radius:12px;background:rgba(10,21,37,.55); }
+#dashboard .ms-val { font-size:1.65rem;letter-spacing:-.04em; }
+#dashboard .ms-lab { display:block;margin-top:.25rem; }
+#dashboard .empty-hint { padding:1rem;border-color:#304765;color:#9eb1cd; }
+@media(max-width:760px) {
+  #dashboard .dash-hero { min-height:unset;gap:1rem; }
+  #dashboard .dash-grid { grid-template-columns:minmax(0,1fr); }
+  #dashboard .dash-grid > .panel { min-height:unset; }
+  #dashboard .score-ring { width:86px;height:86px; }
+  #dashboard .week-bars { height:88px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #dashboard { animation:none; }
+  #dashboard .mini-item { transition:none; }
+}
