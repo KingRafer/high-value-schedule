@@ -60,15 +60,16 @@
           catch { return [key, localStorage.getItem(key)]; }
         })
       );
+      let finalData = cloudData;
       if (Object.keys(cloudData).length === 0 && Object.keys(localData).length > 0) {
         const importLocal = confirm("Akun cloud ini belum memiliki data. Impor data HVOS yang tersimpan di browser ini ke akun Anda?");
         if (importLocal) {
           for (const [key, value] of Object.entries(localData)) {
             await request("/api/data", { method: "PUT", body: JSON.stringify({ key, value }) });
           }
+          finalData = localData;
         }
       }
-      const finalData = Object.keys(cloudData).length ? cloudData : localData;
       Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => localStorage.removeItem(key));
       Object.entries(finalData).forEach(([key, value]) => localStorage.setItem(key, JSON.stringify(value)));
       root.remove();
@@ -81,7 +82,11 @@
       logout.textContent = "Keluar";
       logout.addEventListener("click", async () => {
         logout.disabled = true;
-        try { await request("/api/auth/logout", { method: "POST", body: "{}" }); location.reload(); }
+        try {
+          await request("/api/auth/logout", { method: "POST", body: "{}" });
+          Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => originalRemove.call(localStorage, key));
+          location.reload();
+        }
         catch (e) { logout.disabled = false; alert(e.message); }
       });
       document.querySelector(".topbar-actions")?.appendChild(logout);
