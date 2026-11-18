@@ -92,14 +92,23 @@
           catch { return [key, localStorage.getItem(key)]; }
         })
       );
+      const importableLocalData = { ...localData };
+      const defaultHabits = ["Bangun sebelum 06:00", "Workout / Training", "Deep work 2+ jam", "Baca / Belajar", "No junk food", "Journal malam"];
+      const defaultBlocks = ["Morning Routine", "Deep Work 1", "Deep Work 2", "Training", "Deep Work 3", "Evening Review"];
+      const defaultMorning = ["Minum air + sunlight", "Movement / stretch 10 menit", "Cold shower", "Journal: 3 gratitude + top 3 priority", "Tidak buka HP sebelum selesai routine"];
+      const defaultEvening = ["Review hari ini (apa yang berhasil)", "Plan 3 prioritas besok", "Screen-off 30 menit sebelum tidur", "Siapkan pakaian / tools besok", "Tidur sebelum 22:30"];
+      if (Array.isArray(importableLocalData.hvos_habits) && importableLocalData.hvos_habits.every((item, i) => item.name === defaultHabits[i]) && importableLocalData.hvos_habits.length === defaultHabits.length) delete importableLocalData.hvos_habits;
+      if (Array.isArray(importableLocalData.hvos_blocks) && importableLocalData.hvos_blocks.every((item, i) => item.title === defaultBlocks[i]) && importableLocalData.hvos_blocks.length === defaultBlocks.length) delete importableLocalData.hvos_blocks;
+      if (JSON.stringify(importableLocalData.hvos_morning) === JSON.stringify(defaultMorning)) delete importableLocalData.hvos_morning;
+      if (JSON.stringify(importableLocalData.hvos_evening) === JSON.stringify(defaultEvening)) delete importableLocalData.hvos_evening;
       let finalData = cloudData;
-      if (Object.keys(cloudData).length === 0 && Object.keys(localData).length > 0) {
-        const importLocal = confirm("Akun cloud ini belum memiliki data. Impor data HVOS yang tersimpan di browser ini ke akun Anda?");
+      if (Object.keys(cloudData).length === 0 && Object.keys(importableLocalData).length > 0) {
+        const importLocal = confirm("Ditemukan data pribadi lama di browser ini. Impor data tersebut ke akun cloud Anda?");
         if (importLocal) {
-          for (const [key, value] of Object.entries(localData)) {
+          for (const [key, value] of Object.entries(importableLocalData)) {
             await request("/api/data", { method: "PUT", body: JSON.stringify({ key, value }) });
           }
-          finalData = localData;
+          finalData = importableLocalData;
         }
       }
       Object.keys(localStorage).filter(key => key.startsWith("hvos_")).forEach(key => localStorage.removeItem(key));
@@ -148,10 +157,11 @@
         } catch (e) {
           console.warn("HVOS cloud sync:", e);
           batch.forEach(item => { if (!pendingChanges.has(item.key)) pendingChanges.set(item.key, item); });
-          status.textContent = "Sync tertunda";
+          status.textContent = "Sync tertunda — mencoba lagi";
+          if (!syncTimer) syncTimer = setTimeout(flushSync, 5000);
         } finally {
           syncInFlight = false;
-          if (pendingChanges.size && status.textContent !== "Sync tertunda") scheduleSync();
+          if (pendingChanges.size && !syncTimer) scheduleSync();
         }
       }
       const queueChange = (method, key, rawValue) => {
