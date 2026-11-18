@@ -138,6 +138,17 @@
       const originalSet = Storage.prototype.setItem;
       const originalRemove = Storage.prototype.removeItem;
       const pendingChanges = new Map();
+      const QUEUE_KEY = "__hvos_pending_sync__";
+      const persistQueue = () => {
+        try { originalSet.call(localStorage, QUEUE_KEY, JSON.stringify(Array.from(pendingChanges.values()))); } catch (e) { console.warn("HVOS queue persistence:", e); }
+        status.textContent = pendingChanges.size ? "Sync antre " + pendingChanges.size : (navigator.onLine ? "Cloud sync aktif" : "Offline");
+      };
+      try {
+        const savedQueue = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
+        if (Array.isArray(savedQueue)) savedQueue.forEach(item => {
+          if (item && typeof item.key === "string" && item.key.startsWith("hvos_") && ["PUT","DELETE"].includes(item.method)) pendingChanges.set(item.key, item);
+        });
+      } catch (e) { console.warn("HVOS queue restore:", e); }
       let syncTimer = null;
       let syncInFlight = false;
       const scheduleSync = () => {
@@ -157,10 +168,12 @@
             body: JSON.stringify({ items: batch })
           });
           if (!response.ok) throw new Error("Cloud sync gagal (" + response.status + ")");
-          status.textContent = "Cloud sync aktif";
+          persistQueue();
+          status.textContent = pendingChanges.size ? "Sync antre " + pendingChanges.size : "Cloud sync aktif";
         } catch (e) {
           console.warn("HVOS cloud sync:", e);
           batch.forEach(item => { if (!pendingChanges.has(item.key)) pendingChanges.set(item.key, item); });
+          persistQueue();
           status.textContent = "Sync tertunda — mencoba lagi";
           if (!syncTimer) syncTimer = setTimeout(flushSync, 5000);
         } finally {
@@ -184,8 +197,14 @@
       window.addEventListener("pagehide", () => {
         if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
         if (!pendingChanges.size) return;
-        const batch = Array.from(pendingChanges.values()).slice(0, 100);
-        batch.forEach(item => pendingChanges.delete(item.key));
+        const batch = [];
+        let bytes = 0;
+        for (const item of pendingChanges.values()) {
+          const size = JSON.stringify(item).length;
+          if (batch.length >= 100 || bytes + size > 45000) break;
+          batch.push(item); bytes += size;
+        }
+        if (!batch.length) return;
         try {
           fetch("/api/data", {
             method: "POST",
@@ -195,6 +214,10 @@
             body: JSON.stringify({ items: batch })
           }).then(response => {
             if (!response.ok) console.warn("HVOS pagehide sync gagal:", response.status);
+            else {
+              batch.forEach(item => pendingChanges.delete(item.key));
+              persistQueue();
+            }
           }).catch(error => console.warn("HVOS pagehide sync:", error));
         } catch (error) {
           console.warn("HVOS pagehide sync:", error);
@@ -208,6 +231,7 @@
           try { value = JSON.parse(rawValue); } catch { value = rawValue; }
         }
         pendingChanges.set(key, method === "PUT" ? { method, key, value } : { method, key });
+        persistQueue();
         scheduleSync();
       };
       Storage.prototype.setItem = function(key, value) {
@@ -218,6 +242,9 @@
         originalRemove.call(this, key);
         if (this === localStorage) queueChange("DELETE", String(key));
       };
+      window.addEventListener("online", () => { if (pendingChanges.size && !syncTimer) scheduleSync(); });
+      window.addEventListener("offline", () => { status.textContent = "Offline — antrean " + pendingChanges.size; });
+      if (pendingChanges.size) scheduleSync();
       if (window.HVOS_CONTENT_READY) await window.HVOS_CONTENT_READY;
       const load = src => new Promise((resolve, reject) => {
         const script = document.createElement("script");
