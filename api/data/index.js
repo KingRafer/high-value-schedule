@@ -6,6 +6,8 @@ const MAX_ITEM_BYTES = 512 * 1024;
 const MAX_BATCH_BYTES = 2 * 1024 * 1024;
 
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
   const user = await requireUser(req, res);
   if (!user) return;
   try {
