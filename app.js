@@ -23,6 +23,7 @@
       await loadScript(file);
     }
     await loadScript("core.js");
+    await loadScript("workspace-enhancements.js");
     window.HVOS_APP_READY = true;
   } catch (error) {
     console.error("[HVOS bootstrap]", error);
