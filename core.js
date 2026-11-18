@@ -855,6 +855,7 @@ document.getElementById('form-block')?.addEventListener('submit', e => {
 
 // ---------- TASKS ----------
 function saveTasks() { save(KEYS.tasks, tasks); renderTasks(); renderDashboard(); }
+window.HVOS_SET_TASKS = function(next) { tasks = Array.isArray(next) ? next : tasks; saveTasks(); };
 
 function renderTasks() {
   const list = document.getElementById('task-list');
