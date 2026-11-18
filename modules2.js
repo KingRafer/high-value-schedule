@@ -313,7 +313,7 @@
     let streak = 0;
     for (let i = 0; i < 60; i++) {
       const d = new Date(); d.setDate(d.getDate() - i);
-      const key = d.toISOString().slice(0, 10);
+      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
       if (meditation.some(m => m.date === key)) streak++;
       else if (i > 0) break;
       else break;
@@ -322,7 +322,7 @@
       streak = 0;
       for (let i = 1; i < 60; i++) {
         const d = new Date(); d.setDate(d.getDate() - i);
-        const key = d.toISOString().slice(0, 10);
+        const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         if (meditation.some(m => m.date === key)) streak++;
         else break;
       }
