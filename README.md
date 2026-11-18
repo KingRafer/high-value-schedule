@@ -18,3 +18,10 @@ Personal OS untuk **pria high value**.
 HTML/CSS/Vanilla JS · localStorage · no build
 
 Buka `index.html` (butuh internet sekali) atau GitHub Pages.
+
+
+## Cloud database (MongoDB Atlas)
+
+HVOS now includes an optional cloud backend for account login and cross-device data sync. Deployment instructions and required environment variables are in [README-MONGODB.md](README-MONGODB.md).
+
+The browser app must be deployed on Vercel (or another Node.js serverless host configured for the \`api/\` routes). GitHub Pages alone cannot run the API.
