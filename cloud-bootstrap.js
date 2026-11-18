@@ -146,7 +146,10 @@
       try {
         const savedQueue = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
         if (Array.isArray(savedQueue)) savedQueue.forEach(item => {
-          if (item && typeof item.key === "string" && item.key.startsWith("hvos_") && ["PUT","DELETE"].includes(item.method)) pendingChanges.set(item.key, item);
+          if (!item || typeof item.key !== "string" || !item.key.startsWith("hvos_") || !["PUT","DELETE"].includes(item.method)) return;
+          pendingChanges.set(item.key, item);
+          if (item.method === "PUT") originalSet.call(localStorage, item.key, JSON.stringify(item.value));
+          else originalRemove.call(localStorage, item.key);
         });
       } catch (e) { console.warn("HVOS queue restore:", e); }
       let syncTimer = null;
