@@ -1,5 +1,5 @@
 const CACHE_NAME="hvos-static-v1";
-const APP_FILES=["/","/index.html","/styles.css","/extra.css","/app.js","/core.js","/modules.js","/modules2.js","/modules3.js","/modules4.js","/modules4-ui.js","/modules5.js","/modules5-ui.js","/workspace-enhancements.js","/manifest.webmanifest","/icon.svg"];
+const APP_FILES=["/","/index.html","/styles.css","/extra.css","/app.js","/cloud-bootstrap.js","/core.js","/modules.js","/modules2.js","/modules3.js","/modules4.js","/modules4-ui.js","/modules5.js","/modules5-ui.js","/workspace-enhancements.js","/manifest.webmanifest","/icon.svg"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
 self.addEventListener("fetch",event=>{
